@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import axios from "axios"
 
+const url_api = 'http://localhost:2004/'
+
 class register extends Component{
 
     onRegisterClick = () => {
@@ -8,13 +10,15 @@ class register extends Component{
         let dataUsername = this.username.value
 
         axios.post(
-            "http://localhost:2004/users",
+            url_api + "authRouter/register",
             {
-                username: dataPassword,
-                password: dataUsername
+                username: dataUsername,
+                password: dataPassword
             }
         ).then((res) => {
-            alert("berhasil")
+        }).catch((err) => {
+            console.log(err);
+            
         })
     }
 
@@ -24,7 +28,7 @@ class register extends Component{
                 <div className="col-sm-4 mx-auto mt-5 card">
                     
                     <div className="card-title border-bottom border-secondary">
-                    <h1>Login</h1>
+                    <h1>Register</h1>
                     </div>
 
                     {/* membikin input username */}

@@ -35,14 +35,11 @@ import {
           return (
             <div>
               <Navbar color="light" light expand="md">
-                <Link className="navbar-brand" to="/">simpleMerce</Link>
+                <Link className="navbar-brand" to="/">Follow</Link>
                 <NavbarToggler onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>
                   <Nav className="ml-auto" navbar>
-                    <NavItem>
-                      <NavLink className="nav-link" to="/">All Product</NavLink>
-                    </NavItem>
-                    <NavItem>
+                   <NavItem>
                         <NavLink to='/register'>
                             <Button className='mx-3' color="primary">Register</Button>
                         </NavLink>
