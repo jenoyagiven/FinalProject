@@ -1,73 +1,97 @@
-import React, {Component} from 'react'
-import axios from "axios"
-import swal from "sweetalert2"
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { onLoginClick } from '../actions/index';
+import { Redirect } from 'react-router-dom';
+import Background from "../Image/backgroundPattern-2.png"
+ 
 
-const url_api = 'http://localhost:2004/'
+class Login extends Component {
+	LoginSend = () => {
+		let username = this.data_username.value;
+		let password = this.data_password.value;
+		let email = this.data_email.value
 
-class Login extends Component{    
+		this.props.onLoginClick(username, password, email);
+	};
 
-    onLoginClick = () => {
-        let Username = this.data_username.value
-        let Password = this.data_password.value
-    
-        axios.get(
-            url_api + "authRouter/login",{
-                params:{
-                    username:Username, 
-                    password:Password
-                }
-            }
-        ).then((res) => {
-            swal.fire("Logged In", "click the button to continue", "success")
-        }).catch((err) => {
-            alert("err")
-            console.log(err);
-            
-        })
-    }
+	render() {
+		// // background
+		// var sectionStyle = {
+		// 	width: '100%',
+		// 	height: '400px',
+		// 	backgroundImage: `url(${Background})`
+		// };
+		if (!this.props.user_name) {
+			return (
+				<div >
+					<div className="col-sm-4 mx-auto mt-5 card background">
+						<div className="card-title border-bottom border-secondary">
+							<h1>Login</h1>
+						</div>
 
-    render(){
-        return(
-            <div>
-                <div className="col-sm-4 mx-auto mt-5 card">
-                    
-                    <div className="card-title border-bottom border-secondary">
-                    <h1>Login</h1>
-                    </div>
+						{/* membikin input username */}
+						<div className="form-group">
+						<div className="card-title">
+							<h4>Username</h4>
+							<input
+								ref={(input) => {
+									this.data_username = input;
+								}}
+								className="form-control"
+								type="text"
+							/>
+						</div>
+					</div>
 
-                    {/* membikin input username */}
-                    <div className='form-group'>
-                        <div className="card-title">
-                        <h4>Username</h4>
-                        <input ref = {input => {this.data_username = input}} className="form-control" type="text" />
-                        </div>
-                    </div>
+					{/* membikin input password */}
+					<div className="form-group">
+						<div className="card-title">
+							<h4>Password</h4>
+							<input
+								ref={(input) => {
+									this.data_password = input;
+								}}
+								className="form-control"
+								type="password"
+							/>
+						</div>
+					</div>
 
-                    {/* membikin input password */}
-                    <div className='form-group'>
-                        <div className="card-title">
-                        <h4>Password</h4>
-                        <input  ref = {input => {this.data_password = input}} type="password" className="form-control" />
-                        </div>
-                    </div>
+					<div className="form-group">
+						<div className="card-title">
+							<h4>Email</h4>
+							<input
+								ref={(input) => {
+									this.data_email = input;
+								}}
+								className="form-control"
+								type="email"
+							/>
+						</div>
+					</div>
 
-                    {/* membikin button */}
-                    <div className="form-group">
-                        <input type="button" value="Login" className=" form-control btn btn-outline-primary" onClick={this.onLoginClick}/>
-                    </div>
-                </div>
-            </div>
-    
-        )
-    
-
-    }
+						{/* membikin button */}
+						<div className="form-group">
+							<input
+								type="button"
+								value="Login"
+								className=" form-control btn btn-outline-primary"
+								onClick={this.LoginSend}
+							/>
+						</div>
+					</div>
+				</div>
+			);
+		} else {
+			return <Redirect to="/" />;
+		}
+	}
 }
-    // const mapStateToProps = state => {
-    //     return{
-    //         user_name:state.auth.username
-    //     }
-    // }
+const msp = (state) => {
+	return {
+		user_name: state.auth.username
+	};
+};
 
-
-export default (Login)
+// mengconnect reducer dan file login
+export default connect(msp, { onLoginClick })(Login);

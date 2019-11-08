@@ -14,6 +14,8 @@ app.use(bodyParser())
 app.get("/", (req,res) => {
     res.send('send')
 })
+// kalau bikin path di router selalu nyala express.static
+app.use(express.static('./public'))
 
 // install cors, body-parser, nodemon
 

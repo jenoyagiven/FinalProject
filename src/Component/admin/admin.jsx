@@ -4,7 +4,7 @@ import {Redirect} from "react-router-dom"
 import {connect} from 'react-redux';
 const url_api = 'http://localhost:2004';
 
-class todoList extends Component {
+class adminTodoList extends Component {
 	
 	state = {
 		data: []
@@ -79,10 +79,10 @@ class todoList extends Component {
 	};
 
 	render() {
-		if(this.props.user_name || !this.props.user_name == "user"){
+		if(this.props.user_name == "admin"){
 		return (
 			<div className="container mt-5 ">
-				<h1>List</h1>
+				<h1></h1>
 				<table className="table text-center">
 					<tbody>{this.renderTodo()}</tbody>
 				</table>
@@ -126,4 +126,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(todoList);
+export default connect(mapStateToProps)(adminTodoList);

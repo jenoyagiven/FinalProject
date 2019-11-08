@@ -1,9 +1,15 @@
 var express = require("express")
 var router = express.Router()
 // memakai destructure {} - untuk mengkecilkan kode
-const {authController} = require("../1.controller")
+const {Usercontroller, todoController} = require("../1.controller")
 
-router.post("/register", authController.register)
-router.get("/login", authController.login)
+// user
+router.post("/register", Usercontroller.register)
+router.get("/login", Usercontroller.login)
+
+// todo
+router.post("/addtodo", todoController.addTodo)
+router.get("/gettodo", todoController.getTodo)
+router.delete("/deletetodo/:id", todoController.deleteTodo)
 
 module.exports = router
