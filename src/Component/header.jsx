@@ -45,7 +45,9 @@ class header extends Component {
 			return (
 				<div>
 					<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-						<a className="navbar-brand">FOLLOW</a>
+						<a className="navbar-brand">
+							<font color="white">FOLLOW</font>
+						</a>
 						<Collapse isOpen={this.state.isOpen} navbar>
 							<Nav className="ml-auto" navbar>
 								<NavItem>
@@ -71,7 +73,9 @@ class header extends Component {
 			return (
 				<div>
 					<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-						<a className="navbar-brand" color="white">FOLLOW</a>
+						<a className="navbar-brand">
+							<font color="white">FOLLOW</font>
+						</a>
 						<Nav className="ml-auto" navbar>
 							{/* DROPDOWN */}
 							<Dropdown toggle={this.toggle} direction="down" isOpen={this.state.isOpen}>
@@ -113,10 +117,7 @@ class header extends Component {
 									<DropdownItem>
 										<NavItem>
 											<NavLink to="/">
-												<button
-													type="button"
-													class="btn btn-outline-info"
-												>
+												<button type="button" class="btn btn-outline-info">
 													todoList
 												</button>
 											</NavLink>

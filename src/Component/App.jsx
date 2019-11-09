@@ -9,6 +9,8 @@ import todoList from './todoList';
 import splashScreen from "./splashScreen"
 import admin from "./admin/admin"
 import profile from "./profile"
+import VerifyLink from "./verifyLink"
+import { verify } from 'crypto';
 
 // membikin function untuk melogin
 const keeplogin = (user) => {
@@ -47,6 +49,7 @@ class app extends Component {
 					<Route path="/" exact component={todoList} />
 					<Route path="/admin" component={admin} />
 					<Route path="/profile" component={profile} />
+					<Route path="/verifyLink" component={VerifyLink} />
 				</BrowserRouter>
 			);
 		} else {

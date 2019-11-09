@@ -79,7 +79,7 @@ class todoList extends Component {
 	};
 
 	render() {
-		if(this.props.user_name || !this.props.user_name == "user"){
+		if(this.props.user_name){
 		return (
 			<div className="container mt-5 ">
 				<h1>List</h1>

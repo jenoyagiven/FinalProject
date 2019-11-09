@@ -9,9 +9,8 @@ class Login extends Component {
 	LoginSend = () => {
 		let username = this.data_username.value;
 		let password = this.data_password.value;
-		let email = this.data_email.value
 
-		this.props.onLoginClick(username, password, email);
+		this.props.onLoginClick(username, password);
 	};
 
 	render() {
@@ -53,19 +52,6 @@ class Login extends Component {
 								}}
 								className="form-control"
 								type="password"
-							/>
-						</div>
-					</div>
-
-					<div className="form-group">
-						<div className="card-title">
-							<h4>Email</h4>
-							<input
-								ref={(input) => {
-									this.data_email = input;
-								}}
-								className="form-control"
-								type="email"
 							/>
 						</div>
 					</div>
