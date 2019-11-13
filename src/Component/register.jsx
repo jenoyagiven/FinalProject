@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {onRegisterClick} from "../actions/index"
 import { Redirect } from 'react-router-dom';
-import axios from 'axios';
-import swal from 'sweetalert2';
-const url_api = 'http://localhost:2004/';
 
 class register extends Component {
 
@@ -17,7 +14,7 @@ class register extends Component {
 	}
 
 	render() {
-		if (!this.props.user_name) {
+		if (!this.props.user_id) {
 			return (
 				<div className="col-sm-4 mx-auto mt-5 card">
 					<div className="card-title border-bottom border-secondary">
@@ -82,7 +79,7 @@ class register extends Component {
 
 const mstp = (state) => {
 	return {
-		user_name: state.auth.username
+		user_id: state.auth.id
 	};
 };
 

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Logout } from '../actions/index';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
 	Collapse,
 	Navbar,
 	NavbarToggler,
 	NavbarBrand,
 	Nav,
+	NavLink,
 	NavItem,
 	Dropdown,
 	DropdownToggle,
@@ -44,7 +45,7 @@ class header extends Component {
 		if (!this.props.user_name) {
 			return (
 				<div>
-					<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+					<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
 						<a className="navbar-brand">
 							<font color="white">FOLLOW</font>
 						</a>
@@ -72,11 +73,19 @@ class header extends Component {
 		} else {
 			return (
 				<div>
-					<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+					<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
 						<a className="navbar-brand">
 							<font color="white">FOLLOW</font>
 						</a>
-						<Nav className="ml-auto" navbar>
+
+
+						<Nav className="ml-auto">
+							<NavItem>
+								<NavLink href="/subscription">
+								<font color="white">subscription</font>
+								</NavLink>
+							</NavItem>
+							
 							{/* DROPDOWN */}
 							<Dropdown toggle={this.toggle} direction="down" isOpen={this.state.isOpen}>
 								<DropdownToggle color="">
@@ -94,7 +103,7 @@ class header extends Component {
 
 									<DropdownItem className="text-center">
 										<NavItem>
-											<NavLink to="/profile">
+											<NavLink href="/profile">
 												<button className="btn btn-outline-info">my profile</button>
 											</NavLink>
 										</NavItem>
@@ -103,20 +112,9 @@ class header extends Component {
 									<DropdownItem divider />
 
 									{/* Actions */}
-									<DropdownItem header>Actions</DropdownItem>
 									<DropdownItem>
 										<NavItem>
-											<NavLink to="/register">
-												<button type="button" class="btn btn-outline-info">
-													Register
-												</button>
-											</NavLink>
-										</NavItem>
-									</DropdownItem>
-
-									<DropdownItem>
-										<NavItem>
-											<NavLink to="/">
+											<NavLink href="/">
 												<button type="button" class="btn btn-outline-info">
 													todoList
 												</button>
@@ -126,7 +124,7 @@ class header extends Component {
 
 									<DropdownItem>
 										<NavItem>
-											<NavLink to="/login">
+											<NavLink href="/login">
 												<button
 													type="button"
 													onClick={this.props.Logout}

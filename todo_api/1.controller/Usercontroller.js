@@ -12,8 +12,8 @@ let transporter = nodemailer.createTransport({
 module.exports = {
 	register: (req, res) => {
 		db.query(
-			`insert into todouser (username, password, email) values ('${req.body.username}',  '${req.body
-				.password}', '${req.body.email}')`,
+			`insert into todouser (username, password, email, isVerified) values ('${req.body.username}',  '${req.body
+				.password}', '${req.body.email}', '0')`,
 			(err, result) => {
 				try {
 					if (err) throw err;
@@ -27,6 +27,7 @@ module.exports = {
 
 	login: (req, res) => {
 		db.query(
+			//kalau satu kosong semua false
 			`select * from todouser where username = "${req.query.username}" and password = "${req.query.password}"`,
 			(err, result) => {
 				try {
@@ -39,14 +40,37 @@ module.exports = {
 		);
 	},
 
+	checkUsername:(req, res) => {
+		db.query(`select * from todouser where username = "${req.query.username}"`, (err, result) => {
+			try {
+				if (err) throw err;
+				res.send(result);
+			} catch (err) {
+				console.log(err);
+			}
+		})
+	},
+
+	checkEmail:(req, res) => {
+		db.query(`select * from todouser where email = "${req.query.email}"`, (err, result) => {
+			try {
+				if (err) throw err;
+				res.send(result);
+			} catch (err) {
+				console.log(err);
+			}
+		})
+	},
+
 	// untuk ngesend link verify ke user
 	SendEmail: (req, res) => {
 		let to = req.query.email;
+
 		let mailOption = {
 			from: 'FollowAdmin',
 			to,
 			subject: 'verify Email',
-			html: `<p>klik <a href="http://localhost:3000/verify?username=${req.query
+			html: `<p>klik <a href="http://localhost:2004/authRouter/verify?username=${req.query
 				.username}">ini</a> untuk verify</p>`
 		};
 		//negesend ke email users
@@ -66,7 +90,8 @@ module.exports = {
 		db.query(`update todouser set isVerified = 1 where username = "${req.query.username}"`, (err, result) => {
 			try {
 				if (err) throw err;
-				res.Redirect('/verifylink');
+				res.redirect("http://localhost:3000/verifyLink")
+				res.send(result)
 			} catch (err) {
 				console.log(err);
 			}
@@ -76,11 +101,12 @@ module.exports = {
 	// untuk mengcheck apa email sudah di verify
 	Checkverify: (req, res) => {
 		db.query(
-			`select * from todouser where isVerified = "${req.query.isVerified}" and username = "${req.query
+			`select * from todouser where isVerified = "1" and username = "${req.query
 				.username}"`,
 			(err, result) => {
 				try {
 					if (err) throw err;
+					res.send(result)
 				} catch (err) {
 					console.log(err);
 				}

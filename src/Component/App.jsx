@@ -6,20 +6,22 @@ import Login from './Login';
 import Header from './header';
 import register from './register';
 import todoList from './todoList';
-import splashScreen from "./splashScreen"
-import admin from "./admin/admin"
-import profile from "./profile"
-import VerifyLink from "./verifyLink"
-import { verify } from 'crypto';
+import splashScreen from './splashScreen';
+import admin from './admin/admin';
+import profile from './profile';
+import VerifyLink from './verifyLink';
+import subscription from './subscription';
 
 // membikin function untuk melogin
 const keeplogin = (user) => {
-	return {
-		type: 'login_success',
-		data: {
-			username: user.username,
-			id: user.id
-		}
+	return (dispatch) => {
+		dispatch({
+			type: 'login_success',
+			data: {
+				username: user.username,
+				id: user.id
+			}
+		});
 	};
 };
 class app extends Component {
@@ -50,15 +52,16 @@ class app extends Component {
 					<Route path="/admin" component={admin} />
 					<Route path="/profile" component={profile} />
 					<Route path="/verifyLink" component={VerifyLink} />
+					<Route path="/subscription" component={subscription} />
 				</BrowserRouter>
 			);
 		} else {
-            return(
-            <BrowserRouter>
-            <Route path="/loading" component={splashScreen}/>
-            </BrowserRouter>
-            )
-        }
+			return (
+				<BrowserRouter>
+					<Route path="/loading" component={splashScreen} />
+				</BrowserRouter>
+			);
+		}
 	}
 }
 
