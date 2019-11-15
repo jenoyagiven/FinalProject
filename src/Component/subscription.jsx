@@ -5,18 +5,15 @@ class subscription extends Component {
 		return (
 			<div className="card-deck">
 				{/* subscription 1 */}
-				<div className="card col-sm-3 my-5 mx-auto p-3">
+
+				<div className="hoverable view shadow card col-sm-3 my-5 mx-auto p-3 d-flex flex-column">
 					<div className="card-title" style={{ textAlign: 'center' }}>
-						<h3 className="mx-auto mt-1">Free</h3>
+						<h4 className="mx-auto mt-1">plain</h4>
 					</div>
-					<div className="mx-auto ">
-						<span>
-							<font bolt size="7">
-								RP5000
-							</font>/ month
-						</span>
+					<div className="mx-auto">
+						<h1>FREE</h1>
 					</div>
-					<div className="mt-2 mx-5">
+					<div className="mt-2 mx-5 mb-4">
 						<ul>
 							<li>
 								<p size="5">Todo List</p>
@@ -27,13 +24,15 @@ class subscription extends Component {
 						</ul>
 					</div>
 
-					<button className="btn btn-outline-secondary mt-3">subscribe</button>
+					<a href="/payment" className="btn btn-outline-secondary mt-5" just>
+						<span className="mx-auto">subscribe</span>
+					</a>
 				</div>
 
 				{/* subscription 2 */}
-				<div className="card col-sm-3 my-5 mx-auto ">
-					<div className="card-title" style={{ textAlign: 'center', display:"block"}}>
-						<h3 className="mx-auto mt-1">premium</h3>
+				<div className="card hoverable view shadow col-sm-3 my-5 mx-auto p-3">
+					<div className="card-title" style={{ textAlign: 'center' }}>
+						<h4 className="mx-auto mt-1">premium</h4>
 					</div>
 					<div className="mx-auto ">
 						<span>
@@ -42,13 +41,13 @@ class subscription extends Component {
 							</font>/ month
 						</span>
 					</div>
-					<a/>
+					<a />
 					<div className="mt-2 mx-5">
 						<ul>
 							<li>
 								<p size="5">Todo List</p>
 							</li>
-							
+
 							<li>
 								<p size="5">reminder</p>
 							</li>
@@ -57,7 +56,9 @@ class subscription extends Component {
 							</li>
 						</ul>
 					</div>
-					<button className="btn btn-outline-secondary">subscribe</button>
+					<a href="/payment" className="btn btn-outline-secondary mt-3">
+						<span className="mx-auto">subscribe</span>
+					</a>
 				</div>
 			</div>
 		);

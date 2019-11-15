@@ -52,14 +52,14 @@ class header extends Component {
 						<Collapse isOpen={this.state.isOpen} navbar>
 							<Nav className="ml-auto" navbar>
 								<NavItem>
-									<NavLink to="/register">
+									<NavLink href="/register">
 										<button type="button" class="btn btn-outline-light">
 											Register
 										</button>
 									</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink to="/login">
+									<NavLink href="/login">
 										<button type="button" class="ml-3 btn btn-outline-light">
 											Login
 										</button>

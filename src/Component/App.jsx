@@ -11,6 +11,7 @@ import admin from './admin/admin';
 import profile from './profile';
 import VerifyLink from './verifyLink';
 import subscription from './subscription';
+import payment from './payment';
 
 // membikin function untuk melogin
 const keeplogin = (user) => {
@@ -53,6 +54,7 @@ class app extends Component {
 					<Route path="/profile" component={profile} />
 					<Route path="/verifyLink" component={VerifyLink} />
 					<Route path="/subscription" component={subscription} />
+					<Route path="/payment" component={payment} />
 				</BrowserRouter>
 			);
 		} else {
