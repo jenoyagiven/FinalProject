@@ -21,6 +21,8 @@ const AuthController = (state = inputState  ,action) => {
     }
 }
 
+
+
 // combinereducer - mengabung function2 reducer menjadi satu dan membolehkan, gabung dengan value lain 
 const reducer = combineReducers(
     {

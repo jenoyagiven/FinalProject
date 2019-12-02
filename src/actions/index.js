@@ -51,6 +51,22 @@ export const onLoginClick = (Datausername, Datapassword) => {
 	};
 };
 
+export const verifiedRegister = (user) => {
+	return (dispatch) => {
+		let username = user.username
+		let id = user.id
+		localStorage.setItem('userData', JSON.stringify({ id, username }));
+
+		dispatch({
+			type: 'login_success',
+			data: {
+				username: user.username,
+				id: user.id
+			}
+		});
+	};
+}
+
 export const onRegisterClick = (username, password, email) => {
 	return (dispatch) => {
 		// mensimpulkan data
@@ -105,6 +121,7 @@ export const onRegisterClick = (username, password, email) => {
 			});
 	};
 };
+
 export const Logout = () => {
 	// menghapus data di local storage
 	localStorage.removeItem('userData');

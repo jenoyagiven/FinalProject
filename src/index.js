@@ -16,10 +16,12 @@ import { createStore, applyMiddleware,compose} from 'redux'
 import {Provider} from "react-redux"
 // import redux-thunk
 import thunk from "redux-thunk"
+// import redux-sync - biar redux bisa ngefek semua tab
+import { createStateSyncMiddleware } from 'redux-state-sync';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const reducerFile = createStore(reducer,composeEnhancers(applyMiddleware(thunk)))
+const reducerFile = createStore(reducer,composeEnhancers(applyMiddleware(thunk, createStateSyncMiddleware(reducer))))
     
 ReactDOM.render(
     // mengkasih tau ke semua component reducer yang mana

@@ -13,7 +13,7 @@ class register extends Component {
 	    this.props.onRegisterClick(Datausername, Datapassword, Dataemail)
 	}
 
-	render() {
+	render() {		
 		if (!this.props.user_id) {
 			return (
 				<div className="col-sm-4 mx-auto mt-5 card">

@@ -24,7 +24,7 @@ class subscription extends Component {
 						</ul>
 					</div>
 
-					<a href="/payment" className="btn btn-outline-secondary mt-5" just>
+					<a href="/" className="btn btn-outline-secondary mt-5" just>
 						<span className="mx-auto">subscribe</span>
 					</a>
 				</div>
