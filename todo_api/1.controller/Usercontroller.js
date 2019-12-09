@@ -1,5 +1,6 @@
 const db = require('../database/api');
 const nodemailer = require('nodemailer');
+const fs = require('fs');
 
 let transporter = nodemailer.createTransport({
 	service: 'gmail',
@@ -12,8 +13,7 @@ let transporter = nodemailer.createTransport({
 module.exports = {
 	register: (req, res) => {
 		db.query(
-			`insert into todouser (username, password, email, isVerified, subscription) values ('${req.body.username}',  '${req.body
-				.password}', '${req.body.email}', '0', "free")`,
+			`insert into todouser (username, password, email, isVerified, subscription) values ('${req.body.username}',  '${req.body.password}', '${req.body.email}', '0', "free")`,
 			(err, result) => {
 				try {
 					if (err) throw err;
@@ -23,6 +23,20 @@ module.exports = {
 				}
 			}
 		);
+	},
+
+	uploadImage: (req, res) => {
+		try {
+			console.log(req.params.data.file);
+			//// mengupload gambar ke database
+			// db.query(`update todouser set paymentProof = "${req.query.data.File.name}" where id = "${req.query.id}"`, (err, result) => {
+			// 	if (err) throw err;
+			// 	res.send('success');
+			// });
+		} catch (error) {
+			// fs.unlinkSync(req.file.path);
+			console.log(error);
+		}
 	},
 
 	login: (req, res) => {
@@ -40,7 +54,7 @@ module.exports = {
 		);
 	},
 
-	checkUsername:(req, res) => {
+	checkUsername: (req, res) => {
 		db.query(`select * from todouser where username = "${req.query.username}"`, (err, result) => {
 			try {
 				if (err) throw err;
@@ -48,10 +62,10 @@ module.exports = {
 			} catch (err) {
 				console.log(err);
 			}
-		})
+		});
 	},
 
-	checkEmail:(req, res) => {
+	checkEmail: (req, res) => {
 		db.query(`select * from todouser where email = "${req.query.email}"`, (err, result) => {
 			try {
 				if (err) throw err;
@@ -59,7 +73,7 @@ module.exports = {
 			} catch (err) {
 				console.log(err);
 			}
-		})
+		});
 	},
 
 	// untuk ngesend link verify ke user
@@ -90,8 +104,8 @@ module.exports = {
 		db.query(`update todouser set isVerified = 1 where username = "${req.query.username}"`, (err, result) => {
 			try {
 				if (err) throw err;
-				res.redirect("http://localhost:3000/verifyLink")
-				res.send(result)
+				res.redirect('http://localhost:3000/verifyLink');
+				res.send(result);
 			} catch (err) {
 				console.log(err);
 			}
@@ -101,12 +115,11 @@ module.exports = {
 	// untuk mengcheck apa email sudah di verify
 	Checkverify: (req, res) => {
 		db.query(
-			`select * from todouser where isVerified = "1" and username = "${req.query
-				.username}"`,
+			`select * from todouser where isVerified = "1" and username = "${req.query.username}"`,
 			(err, result) => {
 				try {
 					if (err) throw err;
-					res.send(result)
+					res.send(result);
 				} catch (err) {
 					console.log(err);
 				}

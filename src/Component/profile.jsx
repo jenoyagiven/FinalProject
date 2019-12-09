@@ -1,27 +1,27 @@
-import React, {Component} from "react"
-import {connect} from "react-redux"
-import profile from "../Image/user.png"
-import {Table} from "reactstrap"
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import profile from '../Image/user.png';
+import { Table } from 'reactstrap';
 
-class Profile extends Component{
-render() {
-    return (
-            <div className="card container mx-auto mt-5">
-                <Table className="table text-center">
-                <thead>    
-                <tr>
-                    <td><img src={profile} width="150" height="150"/></td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                
-                </tr>
-                </tbody>
-                </Table>
-            </div>
-    )
-}
+class Profile extends Component {
+	render() {
+		return (
+			<div className="card container mx-auto mt-5">
+				<Table className="table text-center">
+					<thead>
+						<tr>
+							<td>
+								<img src={profile} width="150" height="150" />
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr />
+					</tbody>
+				</Table>
+			</div>
+		);
+	}
 }
 
 const mstp = (state) => {
@@ -30,4 +30,4 @@ const mstp = (state) => {
 	};
 };
 
-export default connect(mstp)(Profile) 
+export default connect(mstp)(Profile);

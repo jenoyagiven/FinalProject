@@ -67,6 +67,7 @@ export const verifiedRegister = (user) => {
 	};
 }
 
+
 export const onRegisterClick = (username, password, email) => {
 	return (dispatch) => {
 		// mensimpulkan data
@@ -122,6 +123,18 @@ export const onRegisterClick = (username, password, email) => {
 	};
 };
 
+export const paymentPicture = (paymentPicture) => {
+	axios.post(url_api + "uploadImage", {
+		params:{
+			paymentProof: paymentPicture
+		}
+	}).then((res) => {
+		console.log("success")
+	}).catch((err) => {
+		console.log(err);
+	})
+}
+
 export const Logout = () => {
 	// menghapus data di local storage
 	localStorage.removeItem('userData');
@@ -130,3 +143,4 @@ export const Logout = () => {
 		type: 'logout_success'
 	};
 };
+

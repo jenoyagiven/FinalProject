@@ -1,39 +1,53 @@
 import React, { Component } from 'react';
+// import {Payment} from "../actions/index"
+// import {paymentPicture} from "../actions/index"
+import axios from 'axios';
+import { connect } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import mandiri from '../Image/Mandiri_logo.png';
 import bca from '../Image/bca.png';
 import ovo from '../Image/ovo.jpg';
+const url_api = 'http://localhost:2004/';
 
 class payment extends Component {
 	// mengupdate radio button setiap kali ganti
-	updateRadio = (changeEvent) => {
+	updateRadio = (radioOption) => {
 		this.setState({
-			PaymentOption: changeEvent.target.value
+			PaymentOption: radioOption.target.value
 		});
 	};
-
-	// // menghapus function default from
-	// handleFormSubmit = (formSubmitEvent) => {
-	// 	formSubmitEvent.preventDefault();
-	// };
 
 	// mengupdate tanggal yang baru
 	updateDate = (date) => {
 		this.setState({
-			Date: date
+			date: date
 		});
 	};
 
-	checkCode = () => {
-		console.log(this.state.paymentProof);
+	// ngesend data ke database
+	paymentPicture = (e) => {
+		e.preventDefault();
+		axios
+			.patch(url_api + 'authRouter/uploadImage', {
+				params: {
+					data: this.state.paymentProof,
+					id: this.props.user_id
+				}
+			})
+			.then((response) => {
+				alert('The file is successfully uploaded');
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	};
 
 	state = {
 		PaymentOption: '',
 		creditNumber: '',
 		securityCode: '',
-		Date: '',
+		date: '',
 		paymentProof: ''
 	};
 
@@ -145,27 +159,37 @@ class payment extends Component {
 				</div>
 
 				{/* inputing image */}
-				<div class="input-group mb-3" style={{ width: '350px' }}>
-					<div class="custom-file">
-						<input
-							type="file"
-							class="custom-file-input"
-							onChange={(e) => {
-								this.setState({ paymentProof: e.target.value });
-							}}
-						/>
-						<label class="custom-file-label text-muted">Choose file</label>
+				<form onSubmit={this.paymentPicture}>
+					<div class="input-group mb-3" style={{ width: '350px' }}>
+						<div class="custom-file">
+							<input
+								type="file"
+								name="image"
+								class="custom-file-input"
+								onChange={(e) => {
+									this.setState({ paymentProof: e.target.files[0]});
+									console.log(this.state.paymentProof);
+								}}
+							/>
+							<label class="custom-file-label text-muted">Choose file</label>
+						</div>
 					</div>
-				</div>
 
-				<div className="mb-2">
-					<button className="btn btn-outline-secondary col-2" onClick={this.checkCode}>
-						Send
-					</button>
-				</div>
+					<div className="mb-2">
+						<button className="btn btn-outline-secondary col-2" type="submit">
+							Send
+						</button>
+					</div>
+				</form>
 			</div>
 		);
 	}
 }
 
-export default payment;
+const mstp = (state) => {
+	return {
+		user_id: state.auth.id
+	};
+};
+
+export default connect(mstp)(payment);
