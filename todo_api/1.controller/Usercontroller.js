@@ -1,6 +1,33 @@
 const db = require('../database/api');
 const nodemailer = require('nodemailer');
-const fs = require('fs');
+var multer = require('multer');
+var fs = require('fs');
+
+// image storage
+var storage = multer.diskStorage({
+	// mengashi destinasi untuk menyimpan folder
+	destination: '../PayProof',
+	// mengashi data, nama
+	filename: function(req, file, cb) {
+		console.log("image");
+		cb(null, `${Date.now()}.${file.mimetype.split('/')[1]}`);
+	}
+});
+
+// ngefilter file yang tidak gambar
+var filterFile = (req, file, cb) => {
+	if (file.mimetype.split('/')[1] == 'png' || file.mimetype.split('/')[1] == 'jpeg') {
+		cb(null, true);
+	} else {
+		req.validation = { error: true, msg: 'file must be an image' };
+		cb(null, true);
+	}
+};
+
+const upload = multer({
+	storage: storage,
+	fileFilter: filterFile
+}).single('image');
 
 let transporter = nodemailer.createTransport({
 	service: 'gmail',
@@ -13,7 +40,8 @@ let transporter = nodemailer.createTransport({
 module.exports = {
 	register: (req, res) => {
 		db.query(
-			`insert into todouser (username, password, email, isVerified, subscription) values ('${req.body.username}',  '${req.body.password}', '${req.body.email}', '0', "free")`,
+			`insert into todouser (username, password, email, isVerified, subscription) values ('${req.body
+				.username}',  '${req.body.password}', '${req.body.email}', '0', "free")`,
 			(err, result) => {
 				try {
 					if (err) throw err;
@@ -26,17 +54,24 @@ module.exports = {
 	},
 
 	uploadImage: (req, res) => {
-		try {
-			console.log(req.params.data.file);
-			//// mengupload gambar ke database
-			// db.query(`update todouser set paymentProof = "${req.query.data.File.name}" where id = "${req.query.id}"`, (err, result) => {
-			// 	if (err) throw err;
-			// 	res.send('success');
-			// });
-		} catch (error) {
-			// fs.unlinkSync(req.file.path);
-			console.log(error);
-		}
+		upload(req, res, (err) => {
+			if (err) {
+				console.log(err);
+
+				// // mengupload gambar ke database
+				// db.query(
+				// 	`update todouser set paymentProof = "${req.query.data.File.name}" where id = "${req.query.id}"`,
+				// 	(err, result) => {
+				// 		if (err) throw err;
+				// 		res.send('success');
+				// 	}
+				// );
+			} else {
+				// fs.unlinkSync(req.file.path);
+				console.log(req.query.file);
+				res.send('test');
+			}
+		});
 	},
 
 	login: (req, res) => {

@@ -25,30 +25,28 @@ class payment extends Component {
 		});
 	};
 
-	// ngesend data ke database
-	paymentPicture = (e) => {
-		e.preventDefault();
-		axios
-			.patch(url_api + 'authRouter/uploadImage', {
-				params: {
-					data: this.state.paymentProof,
-					id: this.props.user_id
-				}
-			})
-			.then((response) => {
-				alert('The file is successfully uploaded');
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
+	// // ngesend data ke database
+	// paymentPicture = () => {
+	// 	let data = this.state.paymentProof
+
+	// 	console.log(data);
+
+	// 	axios
+	// 		.post(url_api + 'upload', data)
+	// 		.then((response) => {
+	// 			console.log(response);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.log(error);
+	// 		});
+	// };
 
 	state = {
 		PaymentOption: '',
 		creditNumber: '',
 		securityCode: '',
 		date: '',
-		paymentProof: ''
+		paymentProof: null
 	};
 
 	render() {
@@ -159,17 +157,13 @@ class payment extends Component {
 				</div>
 
 				{/* inputing image */}
-				<form onSubmit={this.paymentPicture}>
+				<form action="/upload" method="POST" enctype="multipart/form-data">
 					<div class="input-group mb-3" style={{ width: '350px' }}>
 						<div class="custom-file">
 							<input
 								type="file"
 								name="image"
 								class="custom-file-input"
-								onChange={(e) => {
-									this.setState({ paymentProof: e.target.files[0]});
-									console.log(this.state.paymentProof);
-								}}
 							/>
 							<label class="custom-file-label text-muted">Choose file</label>
 						</div>

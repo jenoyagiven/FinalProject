@@ -52,6 +52,7 @@ class todoList extends Component {
 		axios
 			.delete(url_api + `/authRouter/deletetodo/${id}`)
 			.then((res) => {
+				console.log(res);
                 console.log('berhasil');
                 this.getdata()
 			})
