@@ -4,18 +4,17 @@ var multer = require('multer');
 var fs = require('fs');
 
 // image storage
-var storage = multer.diskStorage({
+const storage = multer.diskStorage({
 	// mengashi destinasi untuk menyimpan folder
-	destination: '../PayProof',
+	destination: './Payproof',
 	// mengashi data, nama
 	filename: function(req, file, cb) {
-		console.log("image");
 		cb(null, `${Date.now()}.${file.mimetype.split('/')[1]}`);
 	}
 });
 
 // ngefilter file yang tidak gambar
-var filterFile = (req, file, cb) => {
+const filterFile = (req, file, cb) => {
 	if (file.mimetype.split('/')[1] == 'png' || file.mimetype.split('/')[1] == 'jpeg') {
 		cb(null, true);
 	} else {
@@ -55,21 +54,22 @@ module.exports = {
 
 	uploadImage: (req, res) => {
 		upload(req, res, (err) => {
-			if (err) {
-				console.log(err);
-
-				// // mengupload gambar ke database
-				// db.query(
-				// 	`update todouser set paymentProof = "${req.query.data.File.name}" where id = "${req.query.id}"`,
-				// 	(err, result) => {
-				// 		if (err) throw err;
-				// 		res.send('success');
-				// 	}
-				// );
+			if (req) {
+				console.log(req.body);
+				console.log(req.file);
+				// mengupload gambar ke database
+				db.query(
+					`update todouser set paymentProof = "${req.file.filename}", paymentMethod= "${req.body
+						.option}", creditNumber= "${req.body.creditNumber}",  securityCode= "${req.body
+						.securityCode}" where id = "${req.body.id}"`,
+					(err, result) => {
+						if (err) throw err;
+						res.send('success');
+					}
+				);
 			} else {
-				// fs.unlinkSync(req.file.path);
-				console.log(req.query.file);
-				res.send('test');
+				fs.unlinkSync(req.file.path);
+				console.log(err);
 			}
 		});
 	},

@@ -25,21 +25,28 @@ class payment extends Component {
 		});
 	};
 
-	// // ngesend data ke database
-	// paymentPicture = () => {
-	// 	let data = this.state.paymentProof
-
-	// 	console.log(data);
-
-	// 	axios
-	// 		.post(url_api + 'upload', data)
-	// 		.then((response) => {
-	// 			console.log(response);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.log(error);
-	// 		});
-	// };
+	// ngesend data ke database
+	paymentPicture = () => {
+		var data = new FormData();
+		data.append('image', this.state.paymentProof);
+		data.append('option', this.state.PaymentOption);
+		data.append('creditNumber', this.state.creditNumber);
+		data.append('securityCode', this.state.securityCode);
+		data.append('date', this.state.date);
+		data.append('id', this.props.user_id);
+		axios
+			.patch(url_api + 'authRouter/upload', data, {
+				headers: {
+					'Content-Type': `multipart/form-data`
+				}
+			})
+			.then((response) => {
+				console.log(response);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
 
 	state = {
 		PaymentOption: '',
@@ -157,24 +164,27 @@ class payment extends Component {
 				</div>
 
 				{/* inputing image */}
-				<form action="/upload" method="POST" enctype="multipart/form-data">
-					<div class="input-group mb-3" style={{ width: '350px' }}>
-						<div class="custom-file">
-							<input
-								type="file"
-								name="image"
-								class="custom-file-input"
-							/>
-							<label class="custom-file-label text-muted">Choose file</label>
-						</div>
+				<div class="input-group mb-3" style={{ width: '350px' }}>
+					<div class="custom-file">
+						<input
+							type="file"
+							name="image"
+							class="custom-file-input"
+							onChange={(e) => {
+								this.setState({
+									paymentProof: e.target.files[0]
+								});
+							}}
+						/>
+						<label class="custom-file-label text-muted">Choose file</label>
 					</div>
+				</div>
 
-					<div className="mb-2">
-						<button className="btn btn-outline-secondary col-2" type="submit">
-							Send
-						</button>
-					</div>
-				</form>
+				<div className="mb-2">
+					<button className="btn btn-outline-secondary col-2" onClick={this.paymentPicture}>
+						Send
+					</button>
+				</div>
 			</div>
 		);
 	}
