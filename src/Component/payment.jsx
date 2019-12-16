@@ -8,9 +8,14 @@ import 'react-datepicker/dist/react-datepicker.css';
 import mandiri from '../Image/Mandiri_logo.png';
 import bca from '../Image/bca.png';
 import ovo from '../Image/ovo.jpg';
+import bsCustomFileInput from 'bs-custom-file-input';
 const url_api = 'http://localhost:2004/';
 
 class payment extends Component {
+	componentDidMount() {
+		bsCustomFileInput.init();
+	}
+
 	// mengupdate radio button setiap kali ganti
 	updateRadio = (radioOption) => {
 		this.setState({
@@ -52,7 +57,7 @@ class payment extends Component {
 		PaymentOption: '',
 		creditNumber: '',
 		securityCode: '',
-		date: '',
+		date: null,
 		paymentProof: null
 	};
 
@@ -80,7 +85,7 @@ class payment extends Component {
 								checked={this.state.PaymentOption === 'mandiri'}
 								name="payment method"
 							/>
-							<img src={mandiri} width="100px" height="30px" />
+							<img className="ml-2" src={mandiri} width="100px" height="30px" />
 						</div>
 						<br />
 						<div className="form-check">
@@ -92,7 +97,7 @@ class payment extends Component {
 								checked={this.state.PaymentOption === 'bca'}
 								name="payment method"
 							/>
-							<img src={bca} width="100px" height="30px" />
+							<img className="ml-2" src={bca} width="100px" height="30px" />
 						</div>
 						<br />
 						<div className="form-check">
@@ -104,7 +109,7 @@ class payment extends Component {
 								checked={this.state.PaymentOption === 'ovo'}
 								name="payment method"
 							/>
-							<img src={ovo} width="100px" height="30px" />
+							<img className="ml-2" src={ovo} width="100px" height="30px" />
 						</div>
 					</form>
 				</div>
@@ -113,12 +118,12 @@ class payment extends Component {
 				<div className="mb-3">
 					<span>
 						<font size="2" color="ABB2B9">
-							credit number:
+							Credit Number:
 						</font>
 					</span>
 					{/* menyimpan data ke state */}
 					<input
-						className="card"
+						className="card col-sm-2"
 						type="text"
 						maxLength="16"
 						// kalau input terganti state di update
@@ -130,7 +135,7 @@ class payment extends Component {
 
 				{/* menyimpan security code */}
 				<div className="mb-3">
-					<div className="d-inline-block">
+					<div className="d-inline-block" style={{width:"120px"}}>
 						<span>
 							<font size="2" color="ABB2B9">
 								Security Code:
@@ -139,7 +144,6 @@ class payment extends Component {
 						<br />
 						<input
 							className="card col-sm-10"
-							placeholder="CVC"
 							type="text"
 							minLength="3"
 							maxLength="6"
@@ -150,16 +154,20 @@ class payment extends Component {
 						/>
 					</div>
 
-					<div className="d-inline-block">
+					<div className="d-inline-block" style={{width:"150px"}}>
 						<span>
 							<font size="2" color="ABB2B9">
-								expiry date:
+								Expiry Date:
 							</font>
 						</span>
 						<br />
 
 						{/* membikin action untuk memudah memilih tanggal */}
-						<DatePicker selected={this.state.Date} onChange={this.updateDate} />
+						<DatePicker
+							className="card col-sm-10"
+							selected={this.state.date}
+							onChange={this.updateDate}
+						/>
 					</div>
 				</div>
 
@@ -167,6 +175,7 @@ class payment extends Component {
 				<div class="input-group mb-3" style={{ width: '350px' }}>
 					<div class="custom-file">
 						<input
+						id="filename"
 							type="file"
 							name="image"
 							class="custom-file-input"
@@ -176,7 +185,7 @@ class payment extends Component {
 								});
 							}}
 						/>
-						<label class="custom-file-label text-muted">Choose file</label>
+						<label for="filename" class="custom-file-label">Choose file</label>
 					</div>
 				</div>
 
