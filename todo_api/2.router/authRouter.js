@@ -13,7 +13,7 @@ router.get("/login", Usercontroller.login)
 router.get("/checkusername", Usercontroller.checkUsername)
 router.get("/checkemail", Usercontroller.checkEmail)
 router.get("/checkVerify", Usercontroller.Checkverify)
-router.patch("/upload", Usercontroller.uploadImage)
+router.patch("/upload", Usercontroller.uploadPayment)
 
 // todo
 router.post("/addtodo", todoController.addTodo)

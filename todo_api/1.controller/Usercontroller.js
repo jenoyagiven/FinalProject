@@ -52,20 +52,19 @@ module.exports = {
 		);
 	},
 
-	uploadImage: (req, res) => {
+	uploadPayment: (req, res) => {
 		upload(req, res, (err) => {
 			if (req) {
-				console.log(req.body.date.slice(0, 24));
 				// mengupload gambar ke database
-				// db.query(
-				// 	`update todouser set paymentProof = "${req.file.filename}", paymentMethod= "${req.body
-				// 		.option}", creditNumber= "${req.body.creditNumber}",  securityCode= "${req.body
-				// 		.securityCode}" where id = "${req.body.id}"`,
-				// 	(err, result) => {
-				// 		if (err) throw err;
-				// 		res.send('success');
-				// 	}
-				// );
+				db.query(
+					`update todouser set paymentProof = "${req.file.filename}", paymentMethod= "${req.body
+						.option}", creditNumber= "${req.body.creditNumber}",  securityCode= "${req.body
+						.securityCode}", expiryDate = "${req.body.date.slice(0, 15)}" where id = "${req.body.id}"`,
+					(err, result) => {
+						if (err) throw err;
+						res.send(result);
+					}
+				);
 			} else {
 				fs.unlinkSync(req.file.path);
 				console.log(err);

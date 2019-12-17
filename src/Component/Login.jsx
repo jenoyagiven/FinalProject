@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { onLoginClick } from '../actions/index';
 import { Redirect } from 'react-router-dom';
-import Background from "../Image/backgroundPattern-2.png"
- 
+
 
 class Login extends Component {
 	LoginSend = () => {
@@ -14,12 +13,6 @@ class Login extends Component {
 	};
 
 	render() {
-		// // background
-		// var sectionStyle = {
-		// 	width: '100%',
-		// 	height: '400px',
-		// 	backgroundImage: `url(${Background})`
-		// };
 		if (!this.props.user_name) {
 			return (
 				<div >

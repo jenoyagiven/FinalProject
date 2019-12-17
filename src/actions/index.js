@@ -51,10 +51,41 @@ export const onLoginClick = (Datausername, Datapassword) => {
 	};
 };
 
+// ngesend data ke database
+export const paymentSend = (paymentProof, PaymentOption, creditNumber, securityCode, date, user_id) => {
+	return (dispatch) => {
+		var data = new FormData();
+		data.append('image', paymentProof);
+		data.append('option', PaymentOption);
+		data.append('creditNumber', creditNumber);
+		data.append('securityCode', securityCode);
+		data.append('date', date);
+		data.append('id', user_id);
+		axios
+			.patch(url_api + 'authRouter/upload', data, {
+				headers: {
+					'Content-Type': `multipart/form-data`
+				}
+			})
+			.then((response) => {
+				swal.fire(
+					'The Internet?',
+					'That thing is still around?',
+					'success')
+				dispatch({
+					type: 'transaction_success'
+				});
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+};
+
 export const verifiedRegister = (user) => {
 	return (dispatch) => {
-		let username = user.username
-		let id = user.id
+		let username = user.username;
+		let id = user.id;
 		localStorage.setItem('userData', JSON.stringify({ id, username }));
 
 		dispatch({
@@ -65,8 +96,7 @@ export const verifiedRegister = (user) => {
 			}
 		});
 	};
-}
-
+};
 
 export const onRegisterClick = (username, password, email) => {
 	return (dispatch) => {
@@ -123,18 +153,6 @@ export const onRegisterClick = (username, password, email) => {
 	};
 };
 
-export const paymentPicture = (paymentPicture) => {
-	axios.post(url_api + "uploadImage", {
-		params:{
-			paymentProof: paymentPicture
-		}
-	}).then((res) => {
-		console.log("success")
-	}).catch((err) => {
-		console.log(err);
-	})
-}
-
 export const Logout = () => {
 	// menghapus data di local storage
 	localStorage.removeItem('userData');
@@ -143,4 +161,3 @@ export const Logout = () => {
 		type: 'logout_success'
 	};
 };
-
