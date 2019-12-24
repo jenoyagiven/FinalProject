@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Redirect} from "react-router-dom"
+import { Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
 const url_api = 'http://localhost:2004';
 
@@ -79,7 +79,8 @@ class adminTodoList extends Component {
 	};
 
 	render() {
-		if(this.props.user_name == "admin"){
+		if(this.props.user_admin){
+			
 		return (
 			<div className="container mt-5 ">
 				<h1></h1>
@@ -119,11 +120,10 @@ class adminTodoList extends Component {
 }
 
 // mengambil data dari state reducer
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
-		user_id:state.auth.id,
-		user_name:state.auth.username
+	    user_admin: state.auth.admin
     }
 }
 
-export default connect(mapStateToProps)(adminTodoList);
+export default connect(mapStateToProps, null)(adminTodoList);

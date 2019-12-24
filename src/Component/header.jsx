@@ -42,7 +42,7 @@ class header extends Component {
 	}
 
 	render() {
-		if (!this.props.user_name) {
+		if (!this.props.user_name || this.props.user_admin) {
 			return (
 				<div>
 					<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
@@ -147,7 +147,8 @@ class header extends Component {
 
 const mstp = (state) => {
 	return {
-		user_name: state.auth.username
+		user_name: state.auth.username,
+		user_admin: state.auth.admin
 	};
 };
 

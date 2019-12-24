@@ -17,8 +17,33 @@ export const onLoginClick = (Datausername, Datapassword) => {
 				}
 			})
 			.then((res) => {
+				// kalau tidak ada hasil
 				if (res.data.length == 0) {
-					swal.fire('not found', '', 'error');
+					// megcheck kalau input  adalah untuk admin
+					axios
+						.get(url_api + 'authRouter/loginAdmin', {
+							params: {
+								admin: Username,
+								password: Password
+							}
+						})
+						.then((res) => {
+							let { id, admin } = res.data[0];
+
+							//mengirim data ke localstorage
+							localStorage.setItem('adminData', JSON.stringify({ id, admin }));
+
+							//    mengirim data ke reducer
+							dispatch({
+								type: 'admin_login',
+								data: { id, admin }
+							});
+							swal.fire('Logged In', 'click the button to continue', 'success');
+						})
+						.catch((err) => {
+							console.log(err);
+							swal.fire('not found', '', 'error');
+						});
 				} else {
 					axios
 						.get(url_api + 'authRouter/checkVerify', {
@@ -28,7 +53,7 @@ export const onLoginClick = (Datausername, Datapassword) => {
 						})
 						.then((res) => {
 							if (res.data < 0) {
-								swal.fire('user have not been verified', '', 'error');
+								swal.fire('user have not been verified', 'go to mail', 'error');
 							} else {
 								let { id, username } = res.data[0];
 
@@ -68,10 +93,6 @@ export const paymentSend = (paymentProof, PaymentOption, creditNumber, securityC
 				}
 			})
 			.then((response) => {
-				swal.fire(
-					'The Internet?',
-					'That thing is still around?',
-					'success')
 				dispatch({
 					type: 'transaction_success'
 				});
@@ -154,10 +175,13 @@ export const onRegisterClick = (username, password, email) => {
 };
 
 export const Logout = () => {
-	// menghapus data di local storage
-	localStorage.removeItem('userData');
+	return (dispatch) => {
+		// menghapus data di local storage
+		localStorage.removeItem('userData');
+		localStorage.removeItem('adminData');
 
-	return {
-		type: 'logout_success'
+		dispatch({
+			type: 'logout_success'
+		});
 	};
 };

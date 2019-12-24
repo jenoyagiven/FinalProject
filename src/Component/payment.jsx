@@ -7,6 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import mandiri from '../Image/Mandiri_logo.png';
 import bca from '../Image/bca.png';
 import ovo from '../Image/ovo.jpg';
+import swal from 'sweetalert2';
 import bsCustomFileInput from 'bs-custom-file-input';
 
 class payment extends Component {
@@ -181,7 +182,10 @@ class payment extends Component {
 				</div>
 			);
 		} else {
-			console.log('success');
+			swal.fire(
+				'transaction succes',
+				'wait for admin approval',
+				'success')
 			return <Redirect to="/" />;
 		}
 	}

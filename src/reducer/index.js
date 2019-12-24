@@ -2,8 +2,9 @@ import { combineReducers } from 'redux';
 
 const inputState = {
 	id: '',
-    username: '',
-    transaction:null
+	username: '',
+	admin:'',
+	transaction: null
 };
 
 // action creator
@@ -15,11 +16,14 @@ const AuthController = (state = inputState, action) => {
 
 		// tidak ada break, karena proses reducer akan terhenti
 		case 'logout_success':
-            return { ...state, username: '', id: '' };
-            
-        // membuktikan transaction berhasil
+			return { ...state, username: '', id: '' };
+
+		// membuktikan transaction berhasil
 		case 'transaction_success':
-			return { ...state, transaction: true};
+			return { ...state, transaction: true };
+
+		case 'admin_login':
+			return { ...state, admin: action.data.admin, id: action.data.id };
 
 		default:
 			return state;

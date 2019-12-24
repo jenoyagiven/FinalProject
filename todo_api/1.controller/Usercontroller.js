@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
 	destination: './Payproof',
 	// mengashi data, nama
 	filename: function(req, file, cb) {
-		cb(null, `${Date.now()}.${file.mimetype.split('/')[1]}`);
+		cb(null, `.${file.mimetype.split('/')[1]}`);
 	}
 });
 
@@ -55,6 +55,7 @@ module.exports = {
 	uploadPayment: (req, res) => {
 		upload(req, res, (err) => {
 			if (req) {
+				console.log(req.file);
 				// mengupload gambar ke database
 				db.query(
 					`update todouser set paymentProof = "${req.file.filename}", paymentMethod= "${req.body
@@ -75,7 +76,22 @@ module.exports = {
 	login: (req, res) => {
 		db.query(
 			//kalau satu kosong semua false
-			`select * from todouser where username = "${req.query.username}" and password = "${req.query.password}"`,
+			`select * from todouser where username = "${req.query
+				.username}" and password = "${req.query.password}"`,
+			(err, result) => {
+				try {
+					if (err) throw err;
+					res.send(result);
+				} catch (err) {
+					console.log(err);
+				}
+			}
+		);
+	},
+
+	loginAdmin: (req, res) => {
+		db.query(
+			`select * from usertable where admin = "${req.query.admin}" and password = "${req.query.password}"`,
 			(err, result) => {
 				try {
 					if (err) throw err;
