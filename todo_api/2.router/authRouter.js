@@ -14,6 +14,7 @@ router.get("/loginAdmin", Usercontroller.loginAdmin)
 router.get("/checkusername", Usercontroller.checkUsername)
 router.get("/checkemail", Usercontroller.checkEmail)
 router.get("/checkVerify", Usercontroller.Checkverify)
+router.get("/GetUsers", Usercontroller.GetUsers)
 router.patch("/upload", Usercontroller.uploadPayment)
 
 // todo

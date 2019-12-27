@@ -17,7 +17,7 @@ import adminTodoUser from './admin/adminTodouser';
 
 // membikin function untuk melogin
 const keeplogin = (user) => {
-	console.log(user.username);
+	console.log(user.admin);
 	
 	if (user.username) {
 		return (dispatch) => {
@@ -43,6 +43,7 @@ const keeplogin = (user) => {
 };
 
 class app extends Component {
+	
 	componentDidMount() {
 		// mengambil data dari localstorage untuk user
 		var userStorage = JSON.parse(localStorage.getItem('userData'));

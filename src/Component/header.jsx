@@ -23,10 +23,6 @@ class header extends Component {
 		isOpen: false
 	};
 
-	DeleteStorage = () => {
-		localStorage.removeItem('userData');
-	};
-
 	constructor(props) {
 		super(props);
 
@@ -42,7 +38,7 @@ class header extends Component {
 	}
 
 	render() {
-		if (!this.props.user_name || this.props.user_admin) {
+		if (!this.props.user_id) {
 			return (
 				<div>
 					<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
@@ -78,14 +74,13 @@ class header extends Component {
 							<font color="white">FOLLOW</font>
 						</a>
 
-
 						<Nav className="ml-auto">
 							<NavItem>
 								<NavLink href="/subscription">
-								<font color="white">subscription</font>
+									<font color="white">subscription</font>
 								</NavLink>
 							</NavItem>
-							
+
 							{/* DROPDOWN */}
 							<Dropdown toggle={this.toggle} direction="down" isOpen={this.state.isOpen}>
 								<DropdownToggle color="">
@@ -147,8 +142,7 @@ class header extends Component {
 
 const mstp = (state) => {
 	return {
-		user_name: state.auth.username,
-		user_admin: state.auth.admin
+		user_id: state.auth.id
 	};
 };
 

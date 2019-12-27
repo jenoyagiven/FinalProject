@@ -4,8 +4,6 @@ import { onLoginClick } from '../actions/index';
 import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
-
-
 	LoginSend = () => {
 		let username = this.data_username.value;
 		let password = this.data_password.value;
@@ -14,7 +12,7 @@ class Login extends Component {
 	};
 
 	render() {
-		if (!this.props.user_name || this.props.user_admin) {
+		if (!this.props.user_id) {
 			return (
 				<div>
 					<div className="col-sm-4 mx-auto mt-5 card background">
@@ -62,18 +60,18 @@ class Login extends Component {
 					</div>
 				</div>
 			);
-		} else if (this.props.user_admin) {
-			console.log(this.props.user_admin);
-			return <Redirect to="/adminTodouser" />;
-		} else if(this.props.user_name){
+		} else if (this.props.user_name) {
 			return <Redirect to="/" />;
+		} else if (this.props.user_admin) {
+			return <Redirect to="/adminTodouser" />
 		}
 	}
 }
 const msp = (state) => {
 	return {
 		user_name: state.auth.username,
-	    user_admin: state.auth.admin
+		user_admin: state.auth.admin,
+		user_id: state.auth.id
 	};
 };
 

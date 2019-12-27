@@ -73,11 +73,21 @@ module.exports = {
 		});
 	},
 
+	uploadImage: (req, res) => {
+		db.query(``, (err, result) => {
+			try {
+				if (err) throw err;
+				res.send(result);
+			} catch (err) {
+				console.log(err);
+			}
+		});
+	},
+
 	login: (req, res) => {
 		db.query(
 			//kalau satu kosong semua false
-			`select * from todouser where username = "${req.query
-				.username}" and password = "${req.query.password}"`,
+			`select * from todouser where username = "${req.query.username}" and password = "${req.query.password}"`,
 			(err, result) => {
 				try {
 					if (err) throw err;
@@ -174,5 +184,16 @@ module.exports = {
 				}
 			}
 		);
+	},
+
+	GetUsers: (req, res) => {
+		db.query(`select * from todouser`, (err, result) => {
+			try {
+				if (err) throw err;
+				res.send(result);
+			} catch (err) {
+				console.log(err);
+			}
+		});
 	}
 };

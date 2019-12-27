@@ -4,13 +4,12 @@ var app = express();
 var cors = require('cors');
 // untuk bisa ngesend data ke database
 var bodyParser = require('body-parser');
-const multer = require('multer');
-const fs = require('fs');
+// var path = require("path")
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static('./PayProof'));
+app.use("/payImage" ,express.static('./PayProof'));
 
 const port = 2004;
 const { authRouter } = require('./2.router');

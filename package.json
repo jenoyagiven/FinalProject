@@ -49,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "bootstrap4-card-tables": "^1.2.1",
     "nodemon": "^1.19.2"
   }
 }
