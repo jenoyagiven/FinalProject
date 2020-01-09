@@ -67,11 +67,11 @@ class Login extends Component {
 		}
 	}
 }
-const msp = (state) => {
+const msp = state => {
 	return {
+		user_id:state.auth.id,
 		user_name: state.auth.username,
-		user_admin: state.auth.admin,
-		user_id: state.auth.id
+		user_admin: state.auth.admin
 	};
 };
 

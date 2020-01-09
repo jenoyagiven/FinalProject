@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
 	destination: './Payproof',
 	// mengashi data, nama
 	filename: function(req, file, cb) {
-		cb(null, `.${file.mimetype.split('/')[1]}`);
+		cb(null, `${file.originalname}`);
 	}
 });
 
@@ -39,8 +39,9 @@ let transporter = nodemailer.createTransport({
 module.exports = {
 	register: (req, res) => {
 		db.query(
-			`insert into todouser (username, password, email, isVerified, subscription) values ('${req.body
-				.username}',  '${req.body.password}', '${req.body.email}', '0', "free")`,
+			`insert into todouser (username, password, email, isVerified, subscription, paymentMethod, creditNumber, expiryDate, securityCode, paymentProof) values ('${req
+				.body.username}',  '${req.body.password}', '${req.body
+				.email}', '0', "free", "option", "number", "0", "0", "image")`,
 			(err, result) => {
 				try {
 					if (err) throw err;
@@ -74,11 +75,22 @@ module.exports = {
 	},
 
 	uploadImage: (req, res) => {
-		db.query(``, (err, result) => {
-			try {
-				if (err) throw err;
-				res.send(result);
-			} catch (err) {
+		upload(req, res, (err) => {
+			if (req) {
+				console.log(req.body);
+				console.log(req.file);
+				// mengupload gambar ke database
+				db.query(
+					`update todouser set paymentProof = "${req.file.filename}", paymentMethod= "${req.body
+						.option}", creditNumber= "${req.body.creditNumber}",  securityCode= "${req.body
+						.securityCode}" where id = "${req.body.id}"`,
+					(err, result) => {
+						if (err) throw err;
+						res.send('success');
+					}
+				);
+			} else {
+				fs.unlinkSync(req.file.path);
 				console.log(err);
 			}
 		});
@@ -164,11 +176,21 @@ module.exports = {
 			try {
 				if (err) throw err;
 				res.redirect('http://localhost:3000/verifyLink');
-				res.send(result);
 			} catch (err) {
 				console.log(err);
 			}
 		});
+	},
+
+	verifyTransaction: (req, res) => {
+		db.query(`update todouser set subscription = "premium" where id="${req.params.id}"`, (err, result) => {
+			try{
+				if (err) throw err
+				res.send(result)
+			}catch(err){
+				console.log(err);
+			}
+		})
 	},
 
 	// untuk mengcheck apa email sudah di verify
@@ -185,9 +207,21 @@ module.exports = {
 			}
 		);
 	},
+	
 
 	GetUsers: (req, res) => {
 		db.query(`select * from todouser`, (err, result) => {
+			try {
+				if (err) throw err;
+				res.send(result);
+			} catch (err) {
+				console.log(err);
+			}
+		});
+	},
+
+	DeleteUser: (req, res) => {
+		db.query(`delete from todouser where id="${req.params.id}"`, (err, result) => {
 			try {
 				if (err) throw err;
 				res.send(result);

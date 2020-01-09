@@ -28,20 +28,43 @@ class adminTodoList extends Component {
 			});
 	};
 
-	// // mengambil gambar dari folder
-	// getImage = (filename) => {
-	// 	axios
-	// 		.get(url_api + `/payImage/1576125486323.jpeg`)
-	// 		.then((res) => {
-	// 			console.log(res.data);
-	// 			this.setState({
-	// 				image: res.data
-	// 			});
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log(err);
-	// 		});
-	// };
+	deleteUser = (id) => {
+		axios
+			.delete(url_api + `/authRouter/deleteUser/${id}`)
+			.then((res) => {
+				this.getdata();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+	verifyTransaction = (id) => {
+		console.log(id);
+
+		axios
+			.patch(url_api + `/authRouter/verfiyTran/${id}`)
+			.then((res) => {
+				console.log('test');
+				this.getdata();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+	//
+	BtnClass = (todos) => {
+		return todos.subscription == 'free' ? (
+			<button className={'btn btn-outline-primary'} onClick={() => this.verifyTransaction(todos.id)}>
+				Verify
+			</button>
+		) : (
+			<button className={'btn btn-outline-secondary'} onClick={() => this.verifyTransaction(todos.id)} disabled>
+				Verified
+			</button>
+		);
+	};
 
 	// mengrender todo
 	renderTodo = () => {
@@ -57,11 +80,17 @@ class adminTodoList extends Component {
 					<td>{todos.expiryDate}</td>
 					<td>{todos.securityCode}</td>
 					<td>
-						<img src={`http://localhost:2004/payImage/${todos.paymentProof}`} height="50" width="50" />
+						<img src={`http://localhost:2004/image/${todos.paymentProof}`} height="50" width="50" />
 					</td>
+					<td> {this.BtnClass(todos)}</td>
 					<td>
-						<button className="btn btn-outline-info" onClick={() => this.getImage(todos.paymentProof)}>
-							verify
+						<button
+							className="btn btn-outline-danger"
+							onClick={() => {
+								this.deleteUser(todos.id);
+							}}
+						>
+							Delete
 						</button>
 					</td>
 				</tr>
@@ -75,24 +104,28 @@ class adminTodoList extends Component {
 		if (this.props.user_admin) {
 			return (
 				<div className="container mt-5 ">
-					<div className="card">
-						<table className="table table-sm text-center">
-							<thead>
-								<tr>
-									<th>Username</th>
-									<th>Password</th>
-									<th>Email</th>
-									<th>Subscription</th>
-									<th>Payment Method</th>
-									<th>Credit Number</th>
-									<th>Expiry Date</th>
-									<th>Security Code</th>
-									<th>Payment Image</th>
-									<th>transaction verify</th>
-								</tr>
-							</thead>
-							<tbody>{this.renderTodo()}</tbody>
-						</table>
+					<div class="card border-2">
+						<div class="card-block">
+							{/* to delete space below of card table add - mb-0 in table */}
+							<table className="table table-sm table-bordered text-center mb-0">
+								<thead>
+									<tr>
+										<th>Username</th>
+										<th>Password</th>
+										<th>Email</th>
+										<th>Subscription</th>
+										<th>Payment Method</th>
+										<th>Credit Number</th>
+										<th>Expiry Date</th>
+										<th>Security Code</th>
+										<th>Payment Image</th>
+										<th>Transaction Verify</th>
+										<th>Delete User</th>
+									</tr>
+								</thead>
+								<tbody>{this.renderTodo()}</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			);

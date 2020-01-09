@@ -17,10 +17,8 @@ import adminTodoUser from './admin/adminTodouser';
 
 // membikin function untuk melogin
 const keeplogin = (user) => {
-	console.log(user.admin);
-	
-	if (user.username) {
-		return (dispatch) => {
+	return (dispatch) => {
+		if (user.username) {
 			dispatch({
 				type: 'login_success',
 				data: {
@@ -28,9 +26,7 @@ const keeplogin = (user) => {
 					id: user.id
 				}
 			});
-		};
-	} else if (user.admin) {
-		return (dispatch) => {
+		} else if (user.admin) {
 			dispatch({
 				type: 'admin_login',
 				data: {
@@ -38,12 +34,11 @@ const keeplogin = (user) => {
 					id: user.id
 				}
 			});
-		};
-	}
+		}
+	};
 };
 
 class app extends Component {
-	
 	componentDidMount() {
 		// mengambil data dari localstorage untuk user
 		var userStorage = JSON.parse(localStorage.getItem('userData'));
@@ -54,7 +49,7 @@ class app extends Component {
 		// meglogin untuk user
 		if (userStorage) {
 			this.props.keeplogin(userStorage);
-		}
+		}	
 
 		// meglogin untuk admin
 		if (adminStorage) {

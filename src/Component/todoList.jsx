@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Redirect} from "react-router-dom"
-import {connect} from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 const url_api = 'http://localhost:2004';
 
 class todoList extends Component {
-	
 	state = {
 		data: []
 	};
@@ -36,7 +35,7 @@ class todoList extends Component {
 			.post(url_api + '/authRouter/addtodo', {
 				// menambah todo dengan useridi
 				todo: data_todo,
-				iduser:this.props.user_id
+				iduser: this.props.user_id
 			})
 			.then((res) => {
 				this.getdata();
@@ -53,8 +52,8 @@ class todoList extends Component {
 			.delete(url_api + `/authRouter/deletetodo/${id}`)
 			.then((res) => {
 				console.log(res);
-                console.log('berhasil');
-                this.getdata()
+				console.log('berhasil');
+				this.getdata();
 			})
 			.catch((err) => {
 				console.log(err);
@@ -64,31 +63,40 @@ class todoList extends Component {
 	// mengrender todo
 	renderTodo = () => {
 		let hasilRender = this.state.data.map((todos) => {
-			if(todos.iduser == this.props.user_id){
-			return (
-				<tr>
-					<td>{todos.todo}</td>
-					<td>
-						<input type="button" className="btn btn btn-outline-secondary" onClick={() => this.complete(todos.todo)} value="complete" />
-					</td>
-				</tr>
-			);
-		 }
+			if (todos.iduser == this.props.user_id) {
+				return (
+					<tr>
+						<td>{todos.todo}</td>
+						<td>
+							<input
+								type="button"
+								className="btn btn btn-outline-secondary"
+								onClick={() => this.complete(todos.todo)}
+								value="complete"
+							/>
+						</td>
+					</tr>
+				);
+			}
 		});
 
 		return hasilRender;
 	};
 
 	render() {
-		if(this.props.user_name){
-		return (
-			<div className="container mt-5 ">
-				<h1>List</h1>
-				<table className="table text-center">
-					<tbody>{this.renderTodo()}</tbody>
-				</table>
+		if (this.props.user_name) {
+			return (
+				<div className="container mt-5 mb-0">
+					<h1>List</h1>
+					<div class="card border-2">
+						<div class="card-block">
+							<table className="table table-sm table-bordered text-center mb-0">
+								<tbody>{this.renderTodo()}</tbody>
+							</table>
+						</div>
+					</div>
 
-				<table className="table">
+					<table className="table text-center mt-3">
 					<tbody>
 						<tr>
 							<td>
@@ -111,20 +119,20 @@ class todoList extends Component {
 						</tr>
 					</tbody>
 				</table>
-			</div>
-		);
-	}else{
-		return <Redirect to="/login"/>
+				</div>
+			);
+		} else {
+			return <Redirect to="/login" />;
+		}
 	}
-  }
 }
 
 // mengambil data dari state reducer
-const mapStateToProps = state => {
-    return {
-		user_id:state.auth.id,
-		user_name:state.auth.username
-    }
-}
+const mapStateToProps = (state) => {
+	return {
+		user_id: state.auth.id,
+		user_name: state.auth.username
+	};
+};
 
 export default connect(mapStateToProps)(todoList);

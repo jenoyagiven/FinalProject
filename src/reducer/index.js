@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
+import { withReduxStateSync } from "redux-state-sync";
 
 const inputState = {
 	id: '',
 	username: '',
-	admin:'',
+	admin: '',
 	transaction: null
 };
 
@@ -16,7 +17,7 @@ const AuthController = (state = inputState, action) => {
 
 		// tidak ada break, karena proses reducer akan terhenti
 		case 'logout_success':
-			return { ...state, username: '', id: '' };
+			return { ...state, username: '', id: '', admin: '' };
 
 		// membuktikan transaction berhasil
 		case 'transaction_success':
@@ -35,4 +36,4 @@ const reducer = combineReducers({
 	auth: AuthController
 });
 
-export default reducer;
+export default withReduxStateSync(reducer);

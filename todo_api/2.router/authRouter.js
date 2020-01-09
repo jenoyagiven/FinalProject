@@ -16,6 +16,8 @@ router.get("/checkemail", Usercontroller.checkEmail)
 router.get("/checkVerify", Usercontroller.Checkverify)
 router.get("/GetUsers", Usercontroller.GetUsers)
 router.patch("/upload", Usercontroller.uploadPayment)
+router.patch("/verfiyTran/:id", Usercontroller.verifyTransaction)
+router.delete("/deleteUser/:id", Usercontroller.DeleteUser)
 
 // todo
 router.post("/addtodo", todoController.addTodo)

@@ -29,7 +29,6 @@ export const onLoginClick = (Datausername, Datapassword) => {
 						})
 						.then((res) => {
 							let { id, admin } = res.data[0];
-
 							//mengirim data ke localstorage
 							localStorage.setItem('adminData', JSON.stringify({ id, admin }));
 
@@ -107,13 +106,16 @@ export const verifiedRegister = (user) => {
 	return (dispatch) => {
 		let username = user.username;
 		let id = user.id;
+		console.log(username);
+		console.log(id);
+
 		localStorage.setItem('userData', JSON.stringify({ id, username }));
 
 		dispatch({
 			type: 'login_success',
 			data: {
-				username: user.username,
-				id: user.id
+				username:username,
+				id: id
 			}
 		});
 	};
@@ -164,8 +166,10 @@ export const onRegisterClick = (username, password, email) => {
 											})
 											.then((res) => {
 												let id = res.data.insertId;
+												console.log(id);
+												
 												localStorage.setItem('Userdata', JSON.stringify({ id, username }));
-											});
+											})
 									});
 							}
 						});
@@ -176,6 +180,8 @@ export const onRegisterClick = (username, password, email) => {
 
 export const Logout = () => {
 	return (dispatch) => {
+		console.log("test");
+
 		// menghapus data di local storage
 		localStorage.removeItem('userData');
 		localStorage.removeItem('adminData');
