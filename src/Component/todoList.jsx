@@ -2,11 +2,18 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import TimePicker from 'react-time-picker';
 const url_api = 'http://localhost:2004';
 
 class todoList extends Component {
 	state = {
+		time: new Date(),
+		currentTime:new Date(),
 		data: []
+	};
+
+	TimeChange = (Time) => {
+		this.setState({ time: Time });
 	};
 
 	componentDidMount = () => {
@@ -52,7 +59,6 @@ class todoList extends Component {
 			.delete(url_api + `/authRouter/deletetodo/${id}`)
 			.then((res) => {
 				console.log(res);
-				console.log('berhasil');
 				this.getdata();
 			})
 			.catch((err) => {
@@ -74,6 +80,9 @@ class todoList extends Component {
 								onClick={() => this.complete(todos.todo)}
 								value="complete"
 							/>
+						</td>
+						<td>
+							<TimePicker onChange={this.TimeChange} value={this.state.time}/>
 						</td>
 					</tr>
 				);
@@ -97,28 +106,28 @@ class todoList extends Component {
 					</div>
 
 					<table className="table text-center mt-3">
-					<tbody>
-						<tr>
-							<td>
-								<input
-									type="text"
-									ref={(input) => {
-										this.todo = input;
-									}}
-									className="card form-control"
-								/>
-							</td>
-							<td>
-								<input
-									type="button"
-									className="btn btn-outline-primary form mb-1"
-									value="add"
-									onClick={this.addTodo}
-								/>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+						<tbody>
+							<tr>
+								<td>
+									<input
+										type="text"
+										ref={(input) => {
+											this.todo = input;
+										}}
+										className="card form-control"
+									/>
+								</td>
+								<td>
+									<input
+										type="button"
+										className="btn btn-outline-primary form mb-1"
+										value="add"
+										onClick={this.addTodo}
+									/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			);
 		} else {
