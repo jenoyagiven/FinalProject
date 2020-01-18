@@ -23,5 +23,7 @@ router.delete("/deleteUser/:id", Usercontroller.DeleteUser)
 router.post("/addtodo", todoController.addTodo)
 router.get("/gettodo", todoController.getTodo)
 router.delete("/deletetodo/:id", todoController.deleteTodo)
+router.patch("/setAlarm", todoController.setAlarm)
+router.patch("/RingRing/:id", todoController.RingRing)
 
 module.exports = router

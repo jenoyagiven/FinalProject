@@ -114,7 +114,7 @@ export const verifiedRegister = (user) => {
 		dispatch({
 			type: 'login_success',
 			data: {
-				username:username,
+				username: username,
 				id: id
 			}
 		});
@@ -167,9 +167,9 @@ export const onRegisterClick = (username, password, email) => {
 											.then((res) => {
 												let id = res.data.insertId;
 												console.log(id);
-												
+
 												localStorage.setItem('Userdata', JSON.stringify({ id, username }));
-											})
+											});
 									});
 							}
 						});
@@ -180,7 +180,7 @@ export const onRegisterClick = (username, password, email) => {
 
 export const Logout = () => {
 	return (dispatch) => {
-		console.log("test");
+		console.log('test');
 
 		// menghapus data di local storage
 		localStorage.removeItem('userData');

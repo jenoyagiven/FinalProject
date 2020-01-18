@@ -3,22 +3,51 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import TimePicker from 'react-time-picker';
+import Spinner from 'react-bootstrap/Spinner';
+import swal from 'sweetalert2';
 const url_api = 'http://localhost:2004';
 
 class todoList extends Component {
 	state = {
-		time: new Date(),
-		currentTime:new Date(),
+		Ctime: new Date(),
 		data: []
 	};
 
-	TimeChange = (Time) => {
-		this.setState({ time: Time });
+	// menentukan waktu alarm
+	TimeChange = (time, todo) => {
+		axios
+			.patch(url_api + '/authRouter/setAlarm', {
+				Alarm: time,
+				todo: todo
+			})
+			.then((res) => {
+				console.log(time);
+				
+				this.getdata()
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+	// mengambil waktu sekarang
+	GetTime = () => {
+		this.setState({
+			Ctime: new Date().toLocaleTimeString('it-IT', {timeStyle:"short"})
+		});
 	};
 
 	componentDidMount = () => {
+		// menginisiasasikan setCurretTime setiap detik
+		this.clock = setInterval(() => this.GetTime(), 1000);
 		this.getdata();
 	};
+
+	// menginisiasasikan function waktu tab tertutup
+	componentWillUnmount() {
+		// sebuah function untuk menghentikan jam
+		clearInterval(this.clock);
+	}
 
 	// mengambil data
 	getdata = () => {
@@ -66,6 +95,27 @@ class todoList extends Component {
 			});
 	};
 
+	// kalau alarm dan waktu sekarang sama tanda keluar
+	alarm = (alarm, ctime) => {
+		// console.log(alarm);
+		// console.log(ctime);
+		
+		
+		if (alarm == ctime) {
+			console.log("test");
+			
+			axios
+				.patch(url_api + `/authRouter/RingRing/${this.props.user_id}`)
+				.then((res) => {
+					console.log("succes");
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+
+	};
+
 	// mengrender todo
 	renderTodo = () => {
 		let hasilRender = this.state.data.map((todos) => {
@@ -82,7 +132,8 @@ class todoList extends Component {
 							/>
 						</td>
 						<td>
-							<TimePicker onChange={this.TimeChange} value={this.state.time}/>
+							<TimePicker onChange={(time) => this.TimeChange(time, todos.todo)} value={todos.Alarm} />
+							{this.alarm(todos.Alarm, this.state.Ctime)}
 						</td>
 					</tr>
 				);
