@@ -10,6 +10,7 @@ const url_api = 'http://localhost:2004';
 class todoList extends Component {
 	state = {
 		Ctime: new Date(),
+		alarmState: false,
 		data: []
 	};
 
@@ -22,8 +23,8 @@ class todoList extends Component {
 			})
 			.then((res) => {
 				console.log(time);
-				
-				this.getdata()
+
+				this.getdata();
 			})
 			.catch((err) => {
 				console.log(err);
@@ -33,7 +34,7 @@ class todoList extends Component {
 	// mengambil waktu sekarang
 	GetTime = () => {
 		this.setState({
-			Ctime: new Date().toLocaleTimeString('it-IT', {timeStyle:"short"})
+			Ctime: new Date().toLocaleTimeString('it-IT', { timeStyle: 'short' })
 		});
 	};
 
@@ -97,23 +98,18 @@ class todoList extends Component {
 
 	// kalau alarm dan waktu sekarang sama tanda keluar
 	alarm = (alarm, ctime) => {
-		// console.log(alarm);
-		// console.log(ctime);
-		
-		
 		if (alarm == ctime) {
-			console.log("test");
-			
 			axios
 				.patch(url_api + `/authRouter/RingRing/${this.props.user_id}`)
 				.then((res) => {
-					console.log("succes");
+					this.setState({
+						alarmState: true
+					});
 				})
 				.catch((err) => {
 					console.log(err);
 				});
 		}
-
 	};
 
 	// mengrender todo
@@ -133,7 +129,17 @@ class todoList extends Component {
 						</td>
 						<td>
 							<TimePicker onChange={(time) => this.TimeChange(time, todos.todo)} value={todos.Alarm} />
-							{this.alarm(todos.Alarm, this.state.Ctime)}
+							{this.state.alarmState == false ? (
+								this.alarm(todos.Alarm, this.state.Ctime)
+							) : (
+								(<Spinner animation="grow" />,
+								swal.fire({
+									icon: 'error',
+									title: 'Time Up',
+									text: "it'time to finish that todo",
+									footer: '<a href>Why do I have this issue?</a>'
+								}))
+							)}
 						</td>
 					</tr>
 				);
