@@ -57,19 +57,6 @@ class Login extends Component {
 						</div>
 					</div>
 
-					<div className="form-group">
-						<div className="card-title">
-							<h4>Email</h4>
-							<input
-								ref={(input) => {
-									this.data_email = input;
-								}}
-								className="form-control"
-								type="email"
-							/>
-						</div>
-					</div>
-
 						{/* membikin button */}
 						<div className="form-group">
 							<input

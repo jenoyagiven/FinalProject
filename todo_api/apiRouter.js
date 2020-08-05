@@ -7,12 +7,22 @@ var bodyParser = require("body-parser")
 
 const port = 2004
 const {authRouter} = require("./2.router")
+const db = require("./database/api")
 
 app.use(cors())
 app.use(bodyParser())
 
 app.get("/", (req,res) => {
-    res.send('send')
+    db.query(`select * from user_info`, (err, result) => {
+        try{
+            if (err) throw err
+            res.send('send')
+            console.log("lol");
+        }catch(err){
+            console.log(err);
+        }
+    })
+
 })
 // kalau bikin path di router selalu nyala express.static
 app.use(express.static('./public'))

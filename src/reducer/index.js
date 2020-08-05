@@ -10,7 +10,7 @@ const AuthController = (state = inputState  ,action) => {
     switch (action.type) {
         // kalau login succes
         case "login_success":
-            return{...state, username:action.data.username, id:action.data.id}
+            return{...state, username:action.data.dataUsername, id:action.data.id}
          
         // tidak ada break, karena proses reducer akan terhenti
         case "logout_success":

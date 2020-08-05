@@ -13,7 +13,7 @@ class register extends Component {
 		let Datapassword = this.password.value
 		let Dataemail = this.email.value
 
-	    this.props.onRegisterClick(Datausername, Datapassword)
+	    this.props.onRegisterClick(Datausername, Datapassword, Dataemail)
 	}
 
 	render() {

@@ -64,26 +64,36 @@ export const onRegisterClick = (username, password, email) => {
                 axios
 			.post(url_api + 'authRouter/register', {
 				username: dataUsername,
-				password: dataPassword
+				password: dataPassword,
+				email:dataEmail
 			})
 			.then((res) => {
+				swal.fire(
+					'Good job!',
+					'You clicked the button!',
+					'success'
+				  )
+
+
 				//    memgsimpulkan variable
 				let id = res.data.insertid;
-				let username = dataUsername;
 
-				//mengirim data ke localstorage
-				localStorage.setItem(
-					"userData",
-					JSON.stringify({id, username})
-				)
+				// //mengirim data ke localstorage
+				// localStorage.setItem(
+				// 	"userData",
+				// 	JSON.stringify({id, username})
+				// )
+
+
 				//    mengirim data ke reducer
 				dispatch({
 					type: 'login_success',
-					data: { username, id }
+					data: { dataUsername, id }
 				});
 				swal.fire('user made', 'click the button to continue', 'success');
 			})
 			.catch((err) => {
+				console.log("fail");
 				console.log(err);
 			});
             }
