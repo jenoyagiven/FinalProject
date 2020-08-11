@@ -4,36 +4,35 @@ import swal from 'sweetalert2';
 const url_api = 'http://localhost:2004/';
 
 // membikin function login
-export const onLoginClick = (Datausername, Datapassword, Dataemail) => {
+export const onLoginClick = (Datausername, Datapassword) => {
 	return (dispatch) => {
 		let Username = Datausername;
 		let Password = Datapassword;
-		let Email = Dataemail
 
 		axios
 			.get(url_api + 'authRouter/login', {
 				params: {
 					username: Username,
 					password: Password,
-					email:Email
 				}
 			})
 			.then((res) => {
-                if(res.data.length == 0){
+                if(res.data.length === 0){
                     swal.fire('username doesn\'t exist', '', 'error');
                 }
-				let { id, username } = res.data[0];
+				let { iduser, user_name } = res.data[0];
+				console.log(iduser, user_name);
 
 				//mengirim data ke localstorage
 				localStorage.setItem(
 					"userData",
-					JSON.stringify({id, username})
+					JSON.stringify({iduser, user_name})
 				) 
 				
 				//    mengirim data ke reducer
 				dispatch({
 					type: 'login_success',
-					data: { id, username }
+					data: {iduser, user_name}
 				});
 				swal.fire('Logged In', 'click the button to continue', 'success');
 			})
@@ -74,10 +73,9 @@ export const onRegisterClick = (username, password, email) => {
 					'success'
 				  )
 
-
-				//    memgsimpulkan variable
-				let id = res.data.insertid;
-
+				//    memgsimpulkan variqable
+				let user_name = dataUsername
+				let id_user = res.data.insertid
 				// //mengirim data ke localstorage
 				// localStorage.setItem(
 				// 	"userData",
@@ -88,7 +86,7 @@ export const onRegisterClick = (username, password, email) => {
 				//    mengirim data ke reducer
 				dispatch({
 					type: 'login_success',
-					data: { dataUsername, id }
+					data: { user_name, id_user}
 				});
 				swal.fire('user made', 'click the button to continue', 'success');
 			})

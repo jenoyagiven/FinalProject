@@ -24,7 +24,7 @@ module.exports = {
     },
 
     addTodo:(req, res) => {
-        db.query(`insert into actualtodo (todo, iduser) value ("${req.body.todo}", "${req.body.iduser}")`, (err, result) => {
+        db.query(`insert into todos (todo, iduser) value ("${req.body.todo}", "${req.body.iduser}")`, (err, result) => {
             if(err) throw err
             res.send(result)
         })

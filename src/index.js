@@ -1,8 +1,4 @@
-// // menghubung reducer ke component
-// import reducer from './reducers/index'
-// // create store di pakai untuk membuat reducer
-// import {createStore, applyMiddleware, compose} from "redux"
-// import thunk from "redux-thunk"
+// create store di pakai untuk membuat reducer
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'

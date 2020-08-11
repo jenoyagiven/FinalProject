@@ -15,8 +15,8 @@ const keeplogin = (user) => {
 	return {
 		type: 'login_success',
 		data: {
-			username: user.username,
-			id: user.id
+			username: user.user_name,
+			id: user.iduser
 		}
 	};
 };
