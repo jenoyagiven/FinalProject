@@ -15,10 +15,12 @@ const keeplogin = (user) => {
 	return {
 		type: 'login_success',
 		data: {
-			username: user.user_name,
-			id: user.iduser
+			user_name: user.user_name,
+			iduser:user.iduser
 		}
+
 	};
+	
 };
 class app extends Component {
 	state = {
@@ -32,6 +34,7 @@ class app extends Component {
 		if (userStorage) {
 			this.props.keeplogin(userStorage);
 		}
+
 		this.setState({
 			allow: true
 		});
