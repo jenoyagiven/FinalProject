@@ -22,6 +22,7 @@ class todoList extends Component {
 				this.setState({
 					data: res.data
 				});
+				console.log(res.data);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -48,11 +49,10 @@ class todoList extends Component {
 
 	// kalau todo yang dilakukan sudah selesai
 	complete = (id) => {
-		// memakai id dari rendertodo
 		axios
 			.delete(url_api + `/authRouter/deletetodo/${id}`)
 			.then((res) => {
-                console.log('berhasil');
+				console.log(id);
                 this.getdata()
 			})
 			.catch((err) => {
@@ -63,12 +63,12 @@ class todoList extends Component {
 	// mengrender todo
 	renderTodo = () => {
 		let hasilRender = this.state.data.map((todos) => {
-			if(todos.iduser == this.props.user_id){
+			if(todos.todo_user_id == this.props.user_id){
 			return (
 				<tr>
-					<td>{todos.todo}</td>
+					<td>{todos.todo_name}</td>
 					<td>
-						<input type="button" className="btn btn btn-outline-secondary" onClick={() => this.complete(todos.todo)} value="complete" />
+						<input type="button" className="btn btn btn-outline-secondary" onClick={() => this.complete(todos.todo_id)} value="complete" />
 					</td>
 				</tr>
 			);
@@ -79,7 +79,7 @@ class todoList extends Component {
 	};
 
 	render() {
-		if(this.props.user_name || !this.props.user_name == "user"){
+		if(this.props.user_name || !this.props.user_name === "user"){
 		return (
 			<div className="container mt-5 ">
 				<h1>List</h1>
