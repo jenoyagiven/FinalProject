@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {onRegisterClick} from "../actions/index"
 import { Redirect } from 'react-router-dom';
-import axios from 'axios';
-import swal from 'sweetalert2';
 const url_api = 'http://localhost:2004/';
 
 class register extends Component {

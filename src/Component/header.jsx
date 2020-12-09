@@ -73,6 +73,8 @@ class header extends Component {
 					<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 						<a className="navbar-brand" color="white">FOLLOW</a>
 						<Nav className="ml-auto" navbar>
+							<a className="navbar-brand" href="./subscription">subscription</a>
+
 							{/* DROPDOWN */}
 							<Dropdown toggle={this.toggle} direction="down" isOpen={this.state.isOpen}>
 								<DropdownToggle color="">

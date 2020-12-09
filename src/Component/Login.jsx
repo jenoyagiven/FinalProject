@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { onLoginClick } from '../actions/index';
 import { Redirect } from 'react-router-dom';
-import Background from "../Image/backgroundPattern-2.png"
  
 
 class Login extends Component {
