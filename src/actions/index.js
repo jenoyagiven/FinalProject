@@ -20,19 +20,19 @@ export const onLoginClick = (Datausername, Datapassword) => {
                 if(res.data.length === 0){
                     swal.fire('username doesn\'t exist', '', 'error');
                 }
-				let { iduser, user_name } = res.data[0];
-				console.log(iduser, user_name);
+				let { idlist_user, name } = res.data[0];
+				console.log(res.data);
 
 				//mengirim data ke localstorage
 				localStorage.setItem(
 					"userData",
-					JSON.stringify({iduser, user_name})
+					JSON.stringify({ idlist_user, name })
 				) 
 				
 				//    mengirim data ke reducer
 				dispatch({
 					type: 'login_success',
-					data: {iduser, user_name}
+					data: { idlist_user, name }
 				});
 				swal.fire('Logged In', 'click the button to continue', 'success');
 			})
@@ -74,19 +74,19 @@ export const onRegisterClick = (username, password, email) => {
 				  )
 
 				//    memgsimpulkan variqable
-				let user_name = dataUsername
-				let id_user = res.data.insertid
-				// //mengirim data ke localstorage
-				// localStorage.setItem(
-				// 	"userData",
-				// 	JSON.stringify({id, username})
-				// )
+				let name = dataUsername
+				let idlist_user = res.data.insertId
+				//mengirim data ke localstorage
+				localStorage.setItem(
+					"userData",
+					JSON.stringify({idlist_user, name})
+				)
 
 
 				//    mengirim data ke reducer
 				dispatch({
 					type: 'login_success',
-					data: { user_name, id_user}
+					data: { name, idlist_user}
 				});
 				swal.fire('user made', 'click the button to continue', 'success');
 			})

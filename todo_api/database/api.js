@@ -3,8 +3,9 @@ var mysql = require("mysql")
 const db = mysql.createConnection({
     user:"root",
     password:"password",
-    database:"todo",
-    host: "localhost"
+    database:"todolist",
+    host: "localhost",
+    insecureAuth : true
 })
 
 module.exports = db

@@ -13,7 +13,7 @@ app.use(cors())
 app.use(bodyParser())
 
 app.get("/", (req,res) => {
-    db.query(`select * from user_info`, (err, result) => {
+    db.query(`select * from list_user`, (err, result) => {
         try{
             if (err) throw err
             res.send('send')

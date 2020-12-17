@@ -63,17 +63,18 @@ class todoList extends Component {
 	// mengrender todo
 	renderTodo = () => {
 		let hasilRender = this.state.data.map((todos) => {
-			if(todos.todo_user_id == this.props.user_id){
+			// if(list.todo_user_id == this.props.user_id){
 			return (
 				<tr>
-					<td>{todos.todo_name}</td>
+					<td>{todos.todo}</td>
 					<td>
-						<input type="button" className="btn btn btn-outline-secondary" onClick={() => this.complete(todos.todo_id)} value="complete" />
+						<input type="button" className="btn btn btn-outline-secondary" onClick={() => this.complete(todos.idlist)} value="complete" />
 					</td>
 				</tr>
 			);
 		 }
-		});
+		// }
+		);
 
 		return hasilRender;
 	};

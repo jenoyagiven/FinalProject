@@ -3,7 +3,7 @@ const db = require('../database/api');
 module.exports = {
 	register: (req, res) => {
 		db.query(
-			`insert into user_info (user_name, user_password, user_email) values ('${req.body.username}',  '${req.body.password}', '${req.body.email}')`,
+			`insert into list_user (name, password, email) values ('${req.body.username}',  '${req.body.password}', '${req.body.email}')`,
 			(err, result) => {
 				try {
 					if (err) throw err;
@@ -16,7 +16,7 @@ module.exports = {
 	},
 
 	login: (req, res) => {
-		db.query(`select * from user_info where user_name = "${req.query.username}" or user_email = "${req.query.email}"`, (err, result) => {
+		db.query(`select * from list_user where name = "${req.query.username}"`, (err, result) => {
 			try {
 				if (err) throw err;
 				res.send(result)
@@ -24,5 +24,9 @@ module.exports = {
 				console.log(err);
 			}
 		});
+	},
+
+	sendEmail:(req, res) => {
+		db.query(``)
 	}
 }
