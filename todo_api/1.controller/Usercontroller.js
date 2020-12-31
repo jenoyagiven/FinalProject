@@ -1,13 +1,12 @@
 const db = require("../database/api");
 require("dotenv").config();
 const nodemailer = require("nodemailer");
-import swal from "sweetalert2";
 
 let transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: "jenoyagivenjoy@gmail.com",
-    pass: "joowqmfmbxnjdmdy"
+    pass: "the questi0n"
   },
 });
 
