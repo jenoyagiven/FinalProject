@@ -137,37 +137,60 @@ export const verifiedRegister = (user) => {
 };
 
 export const onRegisterClick = (username, password, email) => {
-  return (dispatch) => {
-    // mensimpulkan data
-    let dataPassword = password;
-    let dataUsername = username;
-    let dataEmail = email;
+	return (dispatch) => {
+		// mensimpulkan data
+		let dataPassword = password;
+		let dataUsername = username;
+		let dataEmail = email;
 
-    // kalau ada username yang sama
+		axios
+			.get(url_api + 'authRouter/checkusername', {
+				params: {
+					username: dataUsername
+				}
+			})
+			.then((res) => {
+				// kalau ada username yang sama
+				if (res.data.length > 0) {
+					swal.fire('username taken', 'make a new one', 'error');
+				} else {
+					axios
+						.get(url_api + 'authRouter/checkemail', {
+							params: {
+								email: dataEmail
+							}
+						})
+						.then((res) => {
+							if (res.data.length > 0) {
+								swal.fire('Email taken', 'use another', 'error');
+							} else {
+								axios
+									.get(url_api + 'authRouter/sendEmail', {
+										params: {
+											email: dataEmail,
+											username: dataUsername
+										}
+									})
+									.then((res) => {
+										swal.fire('verify', 'pergi ke email untuk verify', 'success');
+										axios
+											.post(url_api + 'authRouter/register', {
+												username: dataUsername,
+												password: dataPassword,
+												email: dataEmail
+											})
+											.then((res) => {
+												let id = res.data.insertId;
+												console.log(id);
 
-    axios
-      .get(url_api + "authRouter/sendEmail", {
-        params: {
-          email: dataEmail,
-          username: dataUsername,
-        },
-      })
-      .then((res) => {
-        swal.fire("verify", "pergi ke email untuk verify", "success");
-        axios
-          .post(url_api + "authRouter/register", {
-            username: dataUsername,
-            password: dataPassword,
-            email: dataEmail,
-          })
-          .then((res) => {
-            let id = res.data.insertId;
-            console.log(id);
-
-            localStorage.setItem("Userdata", JSON.stringify({ id, username }));
-          });
-      });
-  };
+												localStorage.setItem('Userdata', JSON.stringify({ id, username }));
+											});
+									});
+							}
+						});
+				}
+			});
+	};
 };
 
 export const Logout = () => {

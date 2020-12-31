@@ -39,9 +39,9 @@ let transporter = nodemailer.createTransport({
 module.exports = {
 	register: (req, res) => {
 		db.query(
-			`insert into list_user (name, password, email) values ('${req
+			`insert into todouser (name, password, email, isVerified, subscription, paymentMethod, creditNumber, expiryDate, securityCode, paymentProof) values ('${req
 				.body.username}',  '${req.body.password}', '${req.body
-				.email}')`,
+				.email}', '0', "free", "option", "number", "0", "0", "image")`,
 			(err, result) => {
 				try {
 					if (err) throw err;
