@@ -4,14 +4,14 @@ var multer = require('multer');
 var fs = require('fs');
 
 // image storage
-const storage = multer.diskStorage({
-	// mengashi destinasi untuk menyimpan folder
-	destination: './Payproof',
-	// mengashi data, nama
-	filename: function(req, file, cb) {
-		cb(null, `${file.originalname}`);
-	}
-});
+// const storage = multer.diskStorage({
+// 	// mengashi destinasi untuk menyimpan folder
+// 	destination: './Payproof',
+// 	// mengashi data, nama
+// 	filename: function(req, file, cb) {
+// 		cb(null, `${file.originalname}`);
+// 	}
+// });
 
 // ngefilter file yang tidak gambar
 const filterFile = (req, file, cb) => {
@@ -23,25 +23,25 @@ const filterFile = (req, file, cb) => {
 	}
 };
 
-const upload = multer({
-	storage: storage,
-	fileFilter: filterFile
-}).single('image');
+// const upload = multer({
+// 	storage: storage,
+// 	fileFilter: filterFile
+// }).single('image');
 
 let transporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth: {
 		user: 'jenoyagivenjoy@gmail.com',
-		pass: 'joowqmfmbxnjdmdy'
+		pass: 'the questi0n'
 	}
 });
 
 module.exports = {
 	register: (req, res) => {
 		db.query(
-			`insert into todouser (username, password, email, isVerified, subscription, paymentMethod, creditNumber, expiryDate, securityCode, paymentProof) values ('${req
+			`insert into list_user (name, password, email) values ('${req
 				.body.username}',  '${req.body.password}', '${req.body
-				.email}', '0', "free", "option", "number", "0", "0", "image")`,
+				.email}')`,
 			(err, result) => {
 				try {
 					if (err) throw err;
@@ -74,27 +74,27 @@ module.exports = {
 		});
 	},
 
-	uploadImage: (req, res) => {
-		upload(req, res, (err) => {
-			if (req) {
-				console.log(req.body);
-				console.log(req.file);
-				// mengupload gambar ke database
-				db.query(
-					`update todouser set paymentProof = "${req.file.filename}", paymentMethod= "${req.body
-						.option}", creditNumber= "${req.body.creditNumber}",  securityCode= "${req.body
-						.securityCode}" where id = "${req.body.id}"`,
-					(err, result) => {
-						if (err) throw err;
-						res.send('success');
-					}
-				);
-			} else {
-				fs.unlinkSync(req.file.path);
-				console.log(err);
-			}
-		});
-	},
+	// uploadImage: (req, res) => {
+	// 	upload(req, res, (err) => {
+	// 		if (req) {
+	// 			console.log(req.body);
+	// 			console.log(req.file);
+	// 			// mengupload gambar ke database
+	// 			db.query(
+	// 				`update todouser set paymentProof = "${req.file.filename}", paymentMethod= "${req.body
+	// 					.option}", creditNumber= "${req.body.creditNumber}",  securityCode= "${req.body
+	// 					.securityCode}" where id = "${req.body.id}"`,
+	// 				(err, result) => {
+	// 					if (err) throw err;
+	// 					res.send('success');
+	// 				}
+	// 			);
+	// 		} else {
+	// 			fs.unlinkSync(req.file.path);
+	// 			console.log(err);
+	// 		}
+	// 	});
+	// },
 
 	login: (req, res) => {
 		db.query(

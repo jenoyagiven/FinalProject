@@ -3,7 +3,7 @@ var mysql = require("mysql")
 const db = mysql.createConnection({
     user:"root",
     password:"password",
-    database:"database-todo",
+    database:"todolist",
     host: "localhost"
 })
 
