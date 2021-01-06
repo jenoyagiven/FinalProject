@@ -7,6 +7,7 @@ const {Usercontroller, todoController} = require("../1.controller")
 router.post("/register", Usercontroller.register)
 router.get("/login", Usercontroller.login)
 router.get("/sendEmail", Usercontroller.sendEmail)
+router.get("/verify", Usercontroller.verify)
 
 // todo
 router.post("/addtodo", todoController.addTodo)

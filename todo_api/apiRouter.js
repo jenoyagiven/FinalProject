@@ -32,4 +32,4 @@ app.use(express.static('./public'))
 app.use("/authRouter", authRouter)
 
 // $ npm install mysqljs/mysql express cors body-parser
-app.listen(port, () => console.log(" I'm listening"))
+app.listen(port, () => console.log("im listening"))

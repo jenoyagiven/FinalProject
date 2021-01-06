@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import swal from "sweetalert2";
+import { json } from "body-parser";
 const url_api = "http://localhost:2004/";
 
 // membikin function login
@@ -83,16 +84,12 @@ export const onRegisterClick = (username, password, email) => {
                     JSON.stringify({ idlist_user, name })
                   );
 
-                  //    mengirim data ke reducer
-                  dispatch({
-                    type: "login_success",
-                    data: { name, idlist_user },
-                  });
-                  // swal.fire(
-                  //   "user made",
-                  //   "click the button to continue",
-                  //   "success"
-                  // );
+                
+                  swal.fire(
+                    "user made",
+                    "click the button to continue",
+                    "success"
+                  );
                 })
                 .catch((err) => {
                   console.log("fail");
@@ -103,6 +100,26 @@ export const onRegisterClick = (username, password, email) => {
       });
   };
 };
+
+export const verifiedRegister = (user) => {
+  return(dispatch) => {
+    let username = user.name;
+    let id = user.idlist_user;
+
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({ id, username })
+    );
+
+    dispatch({
+      type:"login_success",
+      data:{
+        username:username,
+        id:id
+      }
+    })
+  }
+}
 
 export const Logout = () => {
   // menghapus data di local storage

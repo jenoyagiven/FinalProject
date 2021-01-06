@@ -9,6 +9,7 @@ import todoList from "./todoList";
 import admin from "./admin/admin";
 import profile from "./profile";
 import subscription from "./subscription"
+import verify from "./verify"
 
 // membikin function untuk melogin
 const keeplogin = (user) => {
@@ -51,6 +52,7 @@ class app extends Component {
           <Route path="/admin" component={admin} />
           <Route path="/subscription" component={subscription} />
           <Route path="/profile" component={profile} />
+          <Route path="/verifyLink" component={verify} />
         </BrowserRouter>
       );
     

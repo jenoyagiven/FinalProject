@@ -6,7 +6,7 @@ let transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: "jenoyagivenjoy@gmail.com",
-    pass: "the questi0n"
+    pass: "the questi0n",
   },
 });
 
@@ -60,4 +60,15 @@ module.exports = {
       res.send("email kosong");
     }
   },
-};
+
+  verify: (req, res) => {
+		db.query(`update list_user set verify_id = 1 where username = "${req.query.username}"`, (err, result) => {
+			try {
+				if (err) throw err;
+        res.redirect('http://localhost:3000/verifyLink')
+			} catch (err) {
+				console.log(err);
+      }
+    })
+  }
+}
