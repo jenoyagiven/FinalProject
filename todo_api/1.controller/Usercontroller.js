@@ -27,7 +27,7 @@ module.exports = {
 
   login: (req, res) => {
     db.query(
-      `select * from list_user where name = "${req.query.username}"`,
+      `select * from list_user where username = "${req.query.username}" and userPassword = "${req.query.password}"`,
       (err, result) => {
         try {
           if (err) throw err;

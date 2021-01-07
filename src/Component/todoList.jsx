@@ -16,13 +16,17 @@ class todoList extends Component {
 
 	// mengambil data
 	getdata = () => {
+		let id = this.props.user_id
+		console.log(id);
 		axios
-			.get(url_api + '/authRouter/gettodo')
+			.get(url_api + `/authRouter/gettodo/${id}`, {
+				id:this.props.user_id
+			})
 			.then((res) => {
 				this.setState({
 					data: res.data
 				});
-				console.log(res.data);
+				console.log(res);
 			})
 			.catch((err) => {
 				console.log(err);

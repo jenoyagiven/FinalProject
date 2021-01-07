@@ -2,12 +2,14 @@ const db = require("../database/api")
 
 module.exports = {
     getTodo:(req, res) => {
-        db.query(`select * from list`, (err, result) => {
+        db.query(`select * from list where idUser = ${req.params.id}`, (err, result) => {
             try {
                 if(err) throw err
                 res.send(result)
+                console.log(req.query.id);
             } catch (err) {
                 console.log(err)
+                console.log(req.query.id);
             } 
         })
     },
@@ -24,7 +26,7 @@ module.exports = {
     },
 
     addTodo:(req, res) => {
-        db.query(`insert into list (todo) value ("${req.body.todo}")`, (err, result) => {
+        db.query(`insert into list (todo, idUser) value ("${req.body.todo}", "${req.body.iduser}")`, (err, result) => {
             if(err) throw err
             res.send(result)
         })

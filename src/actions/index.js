@@ -14,25 +14,27 @@ export const onLoginClick = (Datausername, Datapassword) => {
       .get(url_api + "authRouter/login", {
         params: {
           username: Username,
-          password: Password,
-        },
+          password: Password
+        }
       })
       .then((res) => {
         if (res.data.length === 0) {
-          swal.fire("username doesn't exist", "", "error");
+          swal.fire("error", "", "error");
+        }else{
+          let { idlist_user, username} = res.data[0];
+          console.log(res.data);
+
+          //mengirim data ke localstorage
+          localStorage.setItem("userData", JSON.stringify({ idlist_user, username }));
+
+          console.log(idlist_user, username);
+          //    mengirim data ke reducer
+          dispatch({
+            type: "login_success",
+            data: { idlist_user, username },
+          });
+          swal.fire("Logged In", "click the button to continue", "success");
         }
-        let { idlist_user, name } = res.data[0];
-        console.log(res.data);
-
-        //mengirim data ke localstorage
-        localStorage.setItem("userData", JSON.stringify({ idlist_user, name }));
-
-        //    mengirim data ke reducer
-        dispatch({
-          type: "login_success",
-          data: { idlist_user, name },
-        });
-        swal.fire("Logged In", "click the button to continue", "success");
       })
       .catch((err) => {
         console.log(err);

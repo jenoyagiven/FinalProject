@@ -11,7 +11,7 @@ router.get("/verify", Usercontroller.verify)
 
 // todo
 router.post("/addtodo", todoController.addTodo)
-router.get("/gettodo", todoController.getTodo)
+router.get("/gettodo/:id", todoController.getTodo)
 router.delete("/deletetodo/:id", todoController.deleteTodo)
 
 module.exports = router
